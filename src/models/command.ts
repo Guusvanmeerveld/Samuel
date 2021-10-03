@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'discord.js';
 
-type Command = (interaction: CommandInteraction) => void | Promise<void>;
+type Command = (interaction: CommandInteraction) => Promise<void>;
 
 export default Command;
 

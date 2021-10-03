@@ -9,7 +9,11 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 		const command = Commands.get(interaction.commandName);
 
 		if (command != undefined) {
-			await command(interaction);
+			await command(interaction).catch((error) => {
+				interaction.reply('An error occurred while processing your command :(');
+
+				console.log(error);
+			});
 
 			return;
 		}
