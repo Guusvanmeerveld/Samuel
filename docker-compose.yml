@@ -1,5 +1,8 @@
 version: '3'
 services:
-  base:
-    image: base
-    container_name: base
+  bot:
+    build: .
+    container_name: tempo
+    env_file: .env
+    volumes:
+      - ./.cache:/app/.cache

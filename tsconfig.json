@@ -1,12 +1,18 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "ES6",
 		"module": "commonjs",
 		"strict": true,
 		"outDir": "dist",
 		"rootDir": "src",
 		"baseUrl": "src",
-		"paths": {},
+		"resolveJsonModule": true,
+		"moduleResolution": "node",
+		"paths": {
+			"@utils/*": ["utils/*"],
+			"@models/*":["models/*"],
+			"@src/*": ["./*"]
+		},
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true

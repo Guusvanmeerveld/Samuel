@@ -4,3 +4,5 @@
 !/package.json
 !/tsconfig.json
 !/yarn.lock
+!/rollup.config.ts
+!/shard.js
