@@ -12,7 +12,7 @@ jobs:
       - name: Setup Checkout
         uses: actions/checkout@v2
 
-      - name: Setup NodeJS v12
+      - name: Setup NodeJS v16
         uses: actions/setup-node@v1
         with:
           node-version: 16
