@@ -1,0 +1,5 @@
+version: '3'
+services:
+  base:
+    image: base
+    container_name: base
