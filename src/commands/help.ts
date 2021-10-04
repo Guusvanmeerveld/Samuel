@@ -2,7 +2,7 @@ import Command from '@models/command';
 
 import { DefaultEmbed } from '@utils/embed';
 
-import * as Utils from '@utils/index';
+import * as Utils from '@src/utils';
 
 import Commands from '@src/config/commands.config';
 
@@ -41,7 +41,7 @@ export const help: Command = async (interaction) => {
 
 	const embed = new DefaultEmbed()
 		.setTitle('Showing a list of all commands')
-		.setFooter('Page ' + page + '/' + list.length);
+		.setFooter(`Page ${page}/${list.length}`);
 
 	commands.forEach((command) => {
 		embed.addField(`Name: \`${command.name}\``, `Description: \`${command.description}\``);

@@ -19,5 +19,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 		}
 
 		interaction.reply('Could not find that command.');
+
+		return;
 	}
 });
