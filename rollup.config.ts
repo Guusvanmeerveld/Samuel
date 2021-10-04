@@ -13,6 +13,6 @@ export default {
 		dir: 'dist',
 		format: 'cjs',
 	},
-	external: ['discord.js', 'dotenv', 'path', 'fs-extra', 'axios'],
+	external: ['discord.js', 'dotenv', 'path', 'fs-extra', 'axios', '@discordjs/voice'],
 	plugins: [dev && run(), json(), typescript(), tsConfigPaths()],
 };

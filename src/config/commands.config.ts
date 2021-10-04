@@ -24,13 +24,29 @@ const config: ApplicationCommand[] = [
 		description: 'Play a song in your current voice channel.',
 		options: [
 			{
+				name: 'platform',
+				description: 'The platform to find the song on',
+				required: false,
+				type: OptionType.STRING,
+				choices: [
+					{
+						name: 'Soundcloud',
+						value: 'soundcloud',
+					},
+					{
+						name: 'Spotify',
+						value: 'spotify',
+					},
+				],
+			},
+			{
 				name: 'url',
 				description: 'The songs url',
 				required: false,
 				type: OptionType.STRING,
 			},
 			{
-				name: 'keyword',
+				name: 'keywords',
 				description: 'Keywords to search for a song',
 				required: false,
 				type: OptionType.STRING,

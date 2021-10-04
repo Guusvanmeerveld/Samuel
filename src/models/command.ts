@@ -14,6 +14,7 @@ export interface Option {
 	name: string;
 	description: string;
 	required?: boolean;
+	choices?: Choice[];
 	type: OptionType;
 }
 
@@ -28,4 +29,9 @@ export enum OptionType {
 	ROLE = 8,
 	MENTIONABLE = 9,
 	NUMBER = 10,
+}
+
+export interface Choice {
+	name: string;
+	value: string | number;
 }
