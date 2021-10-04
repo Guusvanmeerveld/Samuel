@@ -18,3 +18,5 @@ export const CACHE_LOCATION = process.env.CACHE_LOCATION ?? join(process.cwd(), 
 export const CACHE_TIMEOUT = parseInt(process.env.CACHE_TIMEOUT as string) || 1000 * 60 * 5;
 
 export const SOUNDCLOUD_TOKEN = process.env.SOUNDCLOUD_TOKEN;
+
+export const REDIS_URL = process.env.REDIS_URL;

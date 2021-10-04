@@ -2,7 +2,7 @@ import { ClientApplication } from 'discord.js';
 
 import axios, { AxiosError } from 'axios';
 
-import * as Cache from '@utils/cache';
+import Cache from '@utils/cache';
 
 import commands from '@src/config/commands.config';
 
@@ -11,7 +11,7 @@ import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;
 
 const updater = async (application: ClientApplication): Promise<void> => {
-	const lastUpdated: number = await Cache.get('commandsUpdated');
+	const lastUpdated = (await Cache.get('commandsUpdated')) as number | null;
 
 	if (!lastUpdated || (lastUpdated && lastUpdated + CACHE_TIMEOUT < Date.now())) {
 		await axios

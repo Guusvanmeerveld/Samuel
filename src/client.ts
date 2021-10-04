@@ -1,6 +1,6 @@
 import { Client, Intents } from 'discord.js';
 
-import * as Cache from '@utils/cache';
+import Cache from '@utils/cache';
 
 import updateCommands from '@src/updater';
 
