@@ -1,3 +1,5 @@
-export type getter = (key: string) => Promise<string | number | null>;
+export type getter = <T>(key: string) => Promise<T | null>;
 
-export type setter = (key: string, value: string | number) => Promise<void>;
+export type setter = <T>(key: string, value: T) => Promise<void>;
+
+export type deleter = (key: string) => Promise<void>;

@@ -1,6 +1,6 @@
 import Redis from 'ioredis';
 
-import { getter, setter } from '@models/cache';
+import { getter, setter, deleter } from '@models/cache';
 
 import { REDIS_URL } from '@src/config';
 
@@ -21,9 +21,17 @@ export const init = (): void => {
 };
 
 export const get: getter = async (key) => {
-	return await client.get(key);
+	const data = await client.get(key);
+
+	if (!data) return;
+
+	return JSON.parse(data);
 };
 
 export const set: setter = async (key, value) => {
-	await client.set(key, value);
+	await client.set(key, JSON.stringify(value));
+};
+
+export const unset: deleter = async (key) => {
+	await client.set(key, '');
 };
