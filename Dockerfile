@@ -2,7 +2,7 @@ ARG BASE_IMAGE=node:16-alpine
 
 FROM $BASE_IMAGE AS deps
 
-RUN apk add python3
+RUN apk add python3 make
 
 RUN npm i -g node-gyp
 
