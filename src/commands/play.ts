@@ -1,5 +1,7 @@
 import { GuildMember } from 'discord.js';
+import { VoiceConnection } from '@discordjs/voice';
 
+import Song from '@models/song';
 import Command from '@models/command';
 import BotError, { ErrorType } from '@models/errors';
 
@@ -9,11 +11,19 @@ import * as Controller from '@utils/controller';
 import { DefaultEmbed } from '@utils/embed';
 
 import Player from '@utils/player';
-import { VoiceConnection } from '@discordjs/voice';
 
 export const play: Command = async (interaction) => {
 	const url = interaction.options.get('url')?.value;
 	const keywords = interaction.options.get('keywords')?.value;
+
+	// if (interaction.isMessageComponent()) {
+	// 	interaction.message.attachments.forEach((attachment) => {
+	// 		const song: Song = {
+	// 			artists: [interaction.member?.user.username ?? 'Unknown'],
+	// 			// length
+	// 		};
+	// 	});
+	// }
 
 	if (url || keywords) {
 		const member = interaction.member as GuildMember;
@@ -51,7 +61,7 @@ export const play: Command = async (interaction) => {
 
 			if (!song) return;
 
-			const embed = new DefaultEmbed().addField('Length', song.length.toString());
+			const embed = createEmbed(song);
 
 			const player = new Player(guildID);
 
@@ -77,6 +87,8 @@ export const play: Command = async (interaction) => {
 
 	interaction.reply('Please provide a url or some keywords to search for');
 };
+
+const createEmbed = (song: Song) => new DefaultEmbed().addField('Length', song.length.toString());
 
 const onIdle = (connection: VoiceConnection, guildID: string) => {
 	const player = new Player(guildID);

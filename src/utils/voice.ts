@@ -64,9 +64,9 @@ export default class VoiceManager {
 		}
 	};
 
-	public volume = async (volume: number): Promise<void> => {
-		const { controller } = this.player.get();
-	};
+	// public volume = async (volume: number): Promise<void> => {
+	// 	const { controller } = this.player.get();
+	// };
 
 	public disconnect = async (): Promise<void> => {
 		if (!this.connection)

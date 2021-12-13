@@ -44,3 +44,8 @@ export const REDIS_URL = process.env.REDIS_URL;
  * @required
  */
 export const SOUNDCLOUD_TOKEN = process.env.SOUNDCLOUD_TOKEN;
+
+/**
+ * @optional
+ */
+export const PING_ADDRESS = process.env.PING_ADDRESS ?? 'ping.archlinux.org';

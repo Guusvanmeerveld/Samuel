@@ -35,7 +35,7 @@ export const track: getter = async (url) => {
 				transcoding.format.mime_type == 'audio/ogg; codecs="opus"'
 		);
 
-		if (!getStreamURL) throw new BotError(ErrorType.NotFound);
+		if (!getStreamURL) throw new BotError('Could not find soundcloud song', ErrorType.NotFound);
 
 		const streamURL = await axios
 			.get<{ url: string }>(getStreamURL.url, { params: { client_id: SOUNDCLOUD_TOKEN } })
@@ -55,4 +55,12 @@ export const track: getter = async (url) => {
 
 		return song;
 	});
+};
+
+export const testToken = async (): Promise<boolean> => {
+	const { status } = await request('/', {
+		validateStatus: () => true,
+	});
+
+	return status == 404;
 };

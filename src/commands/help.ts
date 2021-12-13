@@ -15,8 +15,13 @@ export const help: Command = async (interaction) => {
 		if (command) {
 			const embed = new DefaultEmbed()
 				.setTitle(`Showing info for the command \`${command.name}\``)
-				.setDescription(`Description: \`${command.description}\``)
-				.addField('Options:', `\`${command.options?.map((option) => option.name)?.join(', ')}\``);
+				.setDescription(`Description: \`${command.description}\``);
+
+			if (command.options)
+				embed.addField(
+					'Options:',
+					`\`${command.options.map((option) => option.name)?.join(', ')}\``
+				);
 
 			interaction.reply({ embeds: [embed] });
 
