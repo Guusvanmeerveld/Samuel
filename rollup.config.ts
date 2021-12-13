@@ -16,7 +16,7 @@ export default {
 		dir: 'dist',
 		format: 'cjs',
 	},
-	external: ['discord.js', '@discordjs/opus', '@discordjs/voice', 'ioredis'],
+	external: ['discord.js', '@discordjs/voice', 'ioredis'],
 	plugins: [
 		dev && run(),
 		json(),

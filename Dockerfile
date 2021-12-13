@@ -2,10 +2,12 @@ ARG BASE_IMAGE=node:16-alpine
 
 FROM $BASE_IMAGE AS deps
 
+RUN npm i -g node-gyp
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --silent
+RUN yarn install --frozen-lockfile
 
 # Build project
 FROM $BASE_IMAGE AS builder
