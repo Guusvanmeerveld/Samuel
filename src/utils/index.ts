@@ -7,3 +7,7 @@ export const chunk = <T>(array: T[], size = 5): T[][] => {
 
 	return chunked;
 };
+
+export const secondsToReadable = (input: string | number): string => {
+	
+}

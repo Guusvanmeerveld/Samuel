@@ -1,5 +1,9 @@
 import Redis from 'ioredis';
 
+import { hash } from '.';
+
+import * as Logger from '@utils/logger';
+
 import { getter, setter, deleter } from '@models/cache';
 
 import { REDIS_URL } from '@src/config';
@@ -10,18 +14,18 @@ export const init = (): void => {
 	client = new Redis(REDIS_URL);
 
 	client.on('connect', () => {
-		console.log('Connected with Redis db');
+		Logger.log('Connected with Redis db');
 	});
 
 	client.on('error', (error) => {
-		console.error('Failed to connect to Redis db:');
+		Logger.error('Failed to connect to Redis db:');
 
-		console.error(error);
+		Logger.error(error);
 	});
 };
 
 export const get: getter = async (key) => {
-	const data = await client.get(key);
+	const data = await client.get(hash(key));
 
 	if (!data) return;
 
@@ -29,9 +33,9 @@ export const get: getter = async (key) => {
 };
 
 export const set: setter = async (key, value) => {
-	await client.set(key, JSON.stringify(value));
+	await client.set(hash(key), JSON.stringify(value));
 };
 
 export const unset: deleter = async (key) => {
-	await client.set(key, '');
+	await client.set(hash(key), '');
 };

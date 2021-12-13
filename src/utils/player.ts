@@ -1,74 +1,123 @@
+import { createAudioPlayer, NoSubscriberBehavior } from '@discordjs/voice';
 import Collection from '@discordjs/collection';
 
 import Song from '@models/song';
-import Player from '@models/player';
+import PlayerModel from '@models/player';
 
-const GlobalPlayer = new Collection<string, Player>();
+const GlobalPlayerModel = new Collection<string, PlayerModel>();
 
-export const init = (guildID: string): Player => {
-	const initial = { volume: 100, loop: false, toPlay: [], hasPlayed: [] };
+export default class Player {
+	constructor(private guildID: string) {}
 
-	GlobalPlayer.set(guildID, initial);
+	/**
+	 * Inits a player for a guild
+	 * @returns The initialized player
+	 */
+	init = (): PlayerModel => {
+		const controller = createAudioPlayer({
+			behaviors: {
+				noSubscriber: NoSubscriberBehavior.Pause,
+			},
+		});
 
-	return initial;
-};
+		const initial = { controller, volume: 100, loop: false, toPlay: [], hasPlayed: [] };
 
-export const unset = (guildID: string): boolean => GlobalPlayer.delete(guildID);
+		GlobalPlayerModel.set(this.guildID, initial);
 
-export const has = (guildID: string, url: string): boolean => {
-	const player = GlobalPlayer.get(guildID);
+		return initial;
+	};
 
-	const song =
-		player?.toPlay.find((song) => song.url == url) ??
-		player?.hasPlayed.find((song) => song.url == url);
+	/**
+	 * Retrieves the player for the current guild.
+	 * @returns The player
+	 */
+	get = (): PlayerModel => {
+		let player = GlobalPlayerModel.get(this.guildID);
 
-	return song != undefined;
-};
+		if (!player) {
+			player = this.init();
+		}
 
-export const add = (guildID: string, song: Song): void => {
-	const player = GlobalPlayer.get(guildID);
+		return player;
+	};
 
-	player?.toPlay.push(song);
-};
+	/**
+	 * Deletes guild from global player.
+	 */
+	unset = (): boolean => GlobalPlayerModel.delete(this.guildID);
 
-export const remove = (guildID: string, url: string): void => {
-	const player = GlobalPlayer.get(guildID);
+	/**
+	 * Checks if a song is in the queue.
+	 * @param url The url of the song
+	 * @returns If the song is in the queue
+	 */
+	has = (url: string): boolean => {
+		const player = this.get();
 
-	player?.toPlay.filter((song) => song.url != url);
-};
+		const song =
+			player?.toPlay.find((song) => song.url == url) ??
+			player?.hasPlayed.find((song) => song.url == url);
 
-export const next = (guildID: string): void => {
-	let player = GlobalPlayer.get(guildID);
+		return song != undefined;
+	};
 
-	if (!player) {
-		player = init(guildID);
-	}
+	/**
+	 * Adds a song to the queue.
+	 * @param song The song to add
+	 */
+	add = (song: Song): void => {
+		const player = this.get();
 
-	const newPlaying = player?.toPlay.shift();
+		player?.toPlay.push(song);
+	};
 
-	if (player?.playing) {
-		player?.hasPlayed.push(player.playing);
-	}
+	/**
+	 * Searches for a song by its url and remove it.
+	 * @param url The url to search for
+	 */
+	remove = (url: string): void => {
+		const player = this.get();
 
-	player.playing = newPlaying;
+		player?.toPlay.filter((song) => song.url != url);
+	};
 
-	console.log(player);
-};
+	/**
+	 * Plays the next song in the queue.
+	 */
+	next = (): void => {
+		const player = this.get();
 
-export const previous = (guildID: string): void => {
-	let player = GlobalPlayer.get(guildID);
+		const newPlaying = player?.toPlay.shift();
 
-	if (!player) {
-		player = init(guildID);
-	}
+		if (player.playing) {
+			player.hasPlayed.push(player.playing);
+		}
 
-	const newPlaying = player?.hasPlayed.pop();
+		player.playing = newPlaying;
+	};
 
-	if (player?.playing) {
-		player?.toPlay.unshift(player.playing);
-	}
+	/**
+	 * Plays the previous song in the queue.
+	 */
+	previous = (): void => {
+		const player = this.get();
 
-	player.playing = newPlaying;
+		const newPlaying = player?.hasPlayed.pop();
 
-	console.log(player);
-};
+		if (player.playing) {
+			player.toPlay.unshift(player.playing);
+		}
+
+		player.playing = newPlaying;
+	};
+
+	/**
+	 * Checks if the player is playing something.
+	 * @returns Wether the player is playing
+	 */
+	isPlaying = (): boolean => {
+		const player = this.get();
+
+		return player?.playing != undefined;
+	};
+}

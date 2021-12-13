@@ -1,3 +1,5 @@
+console.clear();
+
 import { BOT_TOKEN } from '@src/config';
 
 import '@src/events';

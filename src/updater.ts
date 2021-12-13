@@ -3,6 +3,7 @@ import { ClientApplication } from 'discord.js';
 import axios, { AxiosError } from 'axios';
 
 import Cache from '@utils/cache';
+import * as Logger from '@utils/logger';
 
 import commands from '@src/config/commands.config';
 
@@ -21,14 +22,14 @@ const updater = async (application: ClientApplication): Promise<void> => {
 			.then(async (res) => {
 				await Cache.set('commandsUpdated', Date.now());
 
-				console.log(`Updated ${commands.length} command(s)`);
+				Logger.log(`Updated ${commands.length} command(s)`);
 
 				return res;
 			})
 			.catch((error: AxiosError) => {
-				console.log('Failed to update commands:');
+				Logger.log('Failed to update commands:');
 
-				console.log(error.response?.data);
+				Logger.log(error.response?.data);
 			});
 	}
 };

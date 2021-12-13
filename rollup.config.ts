@@ -5,6 +5,9 @@ import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript';
 import tsConfigPaths from 'rollup-plugin-ts-paths';
 
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+
 const dev = process.env.ROLLUP_WATCH === 'true';
 
 export default {
@@ -13,6 +16,13 @@ export default {
 		dir: 'dist',
 		format: 'cjs',
 	},
-	external: ['discord.js', 'dotenv', 'path', 'fs-extra', 'axios', '@discordjs/voice'],
-	plugins: [dev && run(), json(), typescript(), tsConfigPaths()],
+	external: ['discord.js', '@discordjs/opus', '@discordjs/voice', 'ioredis'],
+	plugins: [
+		dev && run(),
+		json(),
+		typescript(),
+		tsConfigPaths(),
+		resolve({ preferBuiltins: false }),
+		commonjs(),
+	],
 };

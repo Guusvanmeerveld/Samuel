@@ -12,13 +12,13 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 			await command(interaction).catch((error) => {
 				interaction.reply('An error occurred while processing your command :(');
 
-				console.log(error);
+				console.error(error);
 			});
 
 			return;
 		}
 
-		interaction.reply('Could not find that command.');
+		await interaction.reply('Could not find that command.');
 
 		return;
 	}

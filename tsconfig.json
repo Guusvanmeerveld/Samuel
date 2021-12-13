@@ -1,16 +1,15 @@
 {
 	"compilerOptions": {
 		"target": "ES6",
-		"module": "commonjs",
+		"module": "CommonJS",
 		"strict": true,
 		"outDir": "dist",
-		"rootDir": "src",
 		"baseUrl": "src",
 		"resolveJsonModule": true,
 		"moduleResolution": "node",
 		"paths": {
 			"@utils/*": ["utils/*"],
-			"@models/*":["models/*"],
+			"@models/*": ["models/*"],
 			"@src/*": ["./*"]
 		},
 		"esModuleInterop": true,
