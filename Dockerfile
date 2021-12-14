@@ -9,6 +9,7 @@ RUN npm i -g node-gyp
 WORKDIR /app
 
 COPY package.json yarn.lock ./
+
 RUN yarn install --frozen-lockfile
 
 # Build project
