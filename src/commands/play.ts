@@ -1,29 +1,17 @@
-import { GuildMember } from 'discord.js';
-import { VoiceConnection } from '@discordjs/voice';
-
-import Song from '@models/song';
-import Command from '@models/command';
-import BotError, { ErrorType } from '@models/errors';
-
-import VoiceManager from '@utils/voice';
-
 import * as Controller from '@utils/controller';
-import { DefaultEmbed } from '@utils/embed';
 
+import BotError, { ErrorType } from '@models/errors';
+import { GuildMember, MessageActionRow, MessageButton } from 'discord.js';
+
+import Command from '@models/command';
+import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
+import Song from '@models/song';
+import VoiceManager from '@utils/voice';
 
 export const play: Command = async (interaction) => {
 	const url = interaction.options.get('url')?.value;
-	const keywords = interaction.options.get('keywords')?.value;
-
-	// if (interaction.isMessageComponent()) {
-	// 	interaction.message.attachments.forEach((attachment) => {
-	// 		const song: Song = {
-	// 			artists: [interaction.member?.user.username ?? 'Unknown'],
-	// 			// length
-	// 		};
-	// 	});
-	// }
+	const keywords = interaction.options.get('keywords')?.value as string;
 
 	if (url || keywords) {
 		const member = interaction.member as GuildMember;
@@ -41,8 +29,8 @@ export const play: Command = async (interaction) => {
 
 		const connected = await voice
 			.join(member.voice.channelId)
-			.catch(async () => {
-				await interaction.reply('Could not connect to your voice channel');
+			.catch(async (e: BotError) => {
+				await interaction.reply(e.message);
 
 				return false;
 			})
@@ -70,16 +58,24 @@ export const play: Command = async (interaction) => {
 			if (player.isPlaying()) {
 				embed.setTitle(`Added \`${song.name}\` to the queue`);
 			} else {
-				player.next();
+				player.move('forward');
 
-				voice.play(song, { onIdle });
+				voice.play(song);
 
 				embed.setTitle(`Now playing \`${song.name}\``);
 			}
 
-			await interaction.followUp({ embeds: [embed] });
+			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
 
 			return;
+		}
+
+		if (keywords) {
+			const platform = interaction.options.get('platform')?.value;
+
+			interaction.followUp(`Searching for \`${keywords}\``);
+
+			await Controller.search(keywords.split(' '), platform as string);
 		}
 
 		return;
@@ -88,21 +84,15 @@ export const play: Command = async (interaction) => {
 	interaction.reply('Please provide a url or some keywords to search for');
 };
 
-const createEmbed = (song: Song) => new DefaultEmbed().addField('Length', song.length.toString());
+const createActionRow = () =>
+	new MessageActionRow().addComponents(
+		new MessageButton().setStyle('PRIMARY').setLabel('Previous').setCustomId('previous-song'),
+		new MessageButton().setStyle('PRIMARY').setLabel('Play/Pause').setCustomId('pause-song'),
+		new MessageButton().setStyle('PRIMARY').setLabel('Next').setCustomId('next-song')
+	);
 
-const onIdle = (connection: VoiceConnection, guildID: string) => {
-	const player = new Player(guildID);
-
-	player.next();
-
-	const { playing } = player.get();
-
-	if (!playing) {
-		connection.disconnect();
-		return;
-	}
-
-	const voice = new VoiceManager(guildID);
-
-	voice.play(playing, { onIdle });
-};
+const createEmbed = (song: Song) =>
+	new DefaultEmbed()
+		.addField('Platform', song.platform, true)
+		.addField('Length', song.length.toString(), true)
+		.addField('Artists', song.artists.join(', '), true);

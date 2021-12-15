@@ -1,8 +1,10 @@
-import { createAudioPlayer, NoSubscriberBehavior } from '@discordjs/voice';
-import Collection from '@discordjs/collection';
+import { NoSubscriberBehavior, createAudioPlayer } from '@discordjs/voice';
 
-import Song from '@models/song';
+import BotError from '@models/errors';
+import Collection from '@discordjs/collection';
 import PlayerModel from '@models/player';
+import Song from '@models/song';
+import VoiceManager from '@utils/voice';
 
 const GlobalPlayerModel = new Collection<string, PlayerModel>();
 
@@ -20,7 +22,14 @@ export default class Player {
 			},
 		});
 
-		const initial = { controller, volume: 100, loop: false, toPlay: [], hasPlayed: [] };
+		const initial = {
+			controller,
+			volume: 100,
+			loop: false,
+			paused: false,
+			toPlay: [],
+			hasPlayed: [],
+		};
 
 		GlobalPlayerModel.set(this.guildID, initial);
 
@@ -82,33 +91,62 @@ export default class Player {
 	};
 
 	/**
-	 * Plays the next song in the queue.
+	 *
 	 */
-	next = (): void => {
+	pause = (): boolean => {
 		const player = this.get();
 
-		const newPlaying = player?.toPlay.shift();
+		if (!player.playing) throw new BotError('There is nothing playing right now.');
 
-		if (player.playing) {
-			player.hasPlayed.push(player.playing);
-		}
+		player.paused = !player.paused;
 
-		player.playing = newPlaying;
+		player.paused ? player.controller.pause() : player.controller.unpause();
+
+		return player.paused;
 	};
 
 	/**
-	 * Plays the previous song in the queue.
+	 * Stops playing the current song
 	 */
-	previous = (): void => {
+	stop = async (): Promise<void> => {
+		const { playing, controller } = this.get();
+
+		if (!playing) throw new BotError('There is nothing playing right now.');
+
+		controller.stop();
+	};
+
+	/**
+	 * Shift the queue in a certain direction
+	 */
+	move = (direction: 'forward' | 'back'): [old: string | void, current: string | void] => {
 		const player = this.get();
 
-		const newPlaying = player?.hasPlayed.pop();
+		let newPlaying: Song | undefined;
+
+		if (direction == 'forward') newPlaying = player?.toPlay.shift();
+		if (direction == 'back') newPlaying = player?.hasPlayed.pop();
+
+		const old = player.playing;
 
 		if (player.playing) {
-			player.toPlay.unshift(player.playing);
+			if (direction == 'back') player.toPlay.unshift(player.playing);
+			if (direction == 'forward') player.hasPlayed.push(player.playing);
 		}
 
 		player.playing = newPlaying;
+
+		const voice = new VoiceManager(this.guildID);
+
+		if (!player.playing) {
+			voice.disconnect();
+
+			return [old?.name, undefined];
+		}
+
+		voice.play(player.playing);
+
+		return [old?.name, player.playing.name];
 	};
 
 	/**

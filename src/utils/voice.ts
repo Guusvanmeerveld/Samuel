@@ -1,23 +1,19 @@
-import { Permissions } from 'discord.js';
-
-import m3u8stream from 'm3u8stream';
+import * as Logger from '@utils/logger';
 
 import {
 	AudioPlayerStatus,
+	VoiceConnection,
 	createAudioResource,
 	getVoiceConnection,
 	joinVoiceChannel,
-	VoiceConnection,
 } from '@discordjs/voice';
-
-import Player from '@utils/player';
-
-import * as Logger from '@utils/logger';
-
 import BotError, { ErrorType } from '@models/errors';
-import Song from '@models/song';
 
+import { Permissions } from 'discord.js';
+import Player from '@utils/player';
+import Song from '@models/song';
 import client from '@src/client';
+import m3u8stream from 'm3u8stream';
 
 type AudioStream = m3u8stream.Stream;
 
@@ -75,10 +71,7 @@ export default class VoiceManager {
 		this.connection?.disconnect();
 	};
 
-	public play = (
-		song: Song,
-		{ onIdle }: { onIdle: (connection: VoiceConnection, guildID: string) => void }
-	): void => {
+	public play = (song: Song, onIdle = this.defaultOnIdle): void => {
 		if (!this.connection) {
 			throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
 		}
@@ -102,5 +95,11 @@ export default class VoiceManager {
 		controller.on('error', (error) => Logger.error('Error playing song: ' + error));
 
 		controller.on(AudioPlayerStatus.Idle, () => onIdle(this.connection!, this.guildID));
+	};
+
+	private defaultOnIdle = (connection: VoiceConnection, guildID: string) => {
+		const player = new Player(guildID);
+
+		player.next();
 	};
 }

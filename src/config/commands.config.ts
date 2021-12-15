@@ -1,22 +1,24 @@
 import { ApplicationCommand, OptionType } from '@models/command';
 
+const platformOption = {
+	name: 'platform',
+	description: 'The platform to find the song on',
+	required: false,
+	type: OptionType.STRING,
+	choices: [
+		{
+			name: 'Soundcloud',
+			value: 'soundcloud',
+		},
+		{
+			name: 'Spotify',
+			value: 'spotify',
+		},
+	],
+};
+
 const playOptions = [
-	{
-		name: 'platform',
-		description: 'The platform to find the song on',
-		required: false,
-		type: OptionType.STRING,
-		choices: [
-			{
-				name: 'Soundcloud',
-				value: 'soundcloud',
-			},
-			{
-				name: 'Spotify',
-				value: 'spotify',
-			},
-		],
-	},
+	platformOption,
 	{
 		name: 'url',
 		description: 'The songs url',
@@ -93,6 +95,7 @@ const config: ApplicationCommand[] = [
 				required: true,
 				type: OptionType.STRING,
 			},
+			platformOption,
 		],
 	},
 	{

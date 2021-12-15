@@ -1,8 +1,7 @@
-import { Interaction } from 'discord.js';
-
-import client from '@src/client';
-
 import Commands from '@src/commands';
+import { Interaction } from 'discord.js';
+import client from '@src/client';
+import handleButtons from '@src/buttons';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
 	if (interaction.isCommand()) {
@@ -21,5 +20,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 		await interaction.reply('Could not find that command.');
 
 		return;
+	}
+
+	if (interaction.isButton()) {
+		await handleButtons(interaction);
 	}
 });
