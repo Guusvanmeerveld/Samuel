@@ -57,8 +57,16 @@ export default class VoiceManager {
 			if (!this.connection) {
 				throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
 			}
+
+			this.connection.on('stateChange', (oldState, newState) => {
+				if (newState.status == 'disconnected') {
+					this.player.unset();
+				}
+			});
 		}
 	};
+
+	public isConnected = (): boolean => getVoiceConnection(this.guildID) != undefined;
 
 	// public volume = async (volume: number): Promise<void> => {
 	// 	const { controller } = this.player.get();
@@ -100,6 +108,6 @@ export default class VoiceManager {
 	private defaultOnIdle = (connection: VoiceConnection, guildID: string) => {
 		const player = new Player(guildID);
 
-		player.next();
+		player.move('forward');
 	};
 }

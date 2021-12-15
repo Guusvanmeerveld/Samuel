@@ -11,5 +11,5 @@ export const disconnect: Command = async (interaction) => {
 	voice
 		.disconnect()
 		.catch(async (e: BotError) => interaction.reply(e.message))
-		.then(() => interaction.reply('Disconnected from the voice channel'));
+		.then(async () => await interaction.reply('Disconnected from the voice channel'));
 };

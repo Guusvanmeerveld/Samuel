@@ -17,17 +17,19 @@ const platformOption = {
 	],
 };
 
+const keywordsOptions = {
+	name: 'keywords',
+	description: 'Keywords to search for',
+	required: true,
+	type: OptionType.STRING,
+};
+
 const playOptions = [
+	keywordsOptions,
 	platformOption,
 	{
 		name: 'url',
 		description: 'The songs url',
-		required: false,
-		type: OptionType.STRING,
-	},
-	{
-		name: 'keywords',
-		description: 'Keywords to search for a song',
 		required: false,
 		type: OptionType.STRING,
 	},
@@ -88,15 +90,7 @@ const config: ApplicationCommand[] = [
 	{
 		name: 'search',
 		description: 'Search for a song',
-		options: [
-			{
-				name: 'keywords',
-				description: 'Keywords to search for',
-				required: true,
-				type: OptionType.STRING,
-			},
-			platformOption,
-		],
+		options: [keywordsOptions, platformOption],
 	},
 	{
 		name: 'ping',
@@ -111,6 +105,17 @@ const config: ApplicationCommand[] = [
 		name: 'play',
 		description: 'Play a song in your current voice channel.',
 		options: playOptions,
+	},
+	{
+		name: 'volume',
+		description: 'Set the bots volume.',
+		options: [
+			{
+				name: 'level',
+				description: 'The new volume level',
+				type: OptionType.INTEGER,
+			},
+		],
 	},
 ];
 

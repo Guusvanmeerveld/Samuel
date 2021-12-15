@@ -8,4 +8,19 @@ export const chunk = <T>(array: T[], size = 5): T[][] => {
 	return chunked;
 };
 
-// export const secondsToReadable = (input: string | number): string => {};
+export const secondsToReadable = (input: number): string => {
+	const date = new Date(input * 1000);
+	const hours = date.getUTCHours();
+	const minutes = date.getUTCMinutes();
+	const seconds = date.getSeconds();
+
+	return (
+		hours.toString().padStart(2, '0') +
+		':' +
+		minutes.toString().padStart(2, '0') +
+		':' +
+		seconds.toString().padStart(2, '0')
+	);
+};
+
+export const capitalize = (input: string): string => input.replace(/^\w/, (c) => c.toUpperCase());

@@ -1,6 +1,6 @@
 import { NoSubscriberBehavior, createAudioPlayer } from '@discordjs/voice';
 
-import BotError from '@models/errors';
+import BotError, { ErrorType } from '@models/errors';
 import Collection from '@discordjs/collection';
 import PlayerModel from '@models/player';
 import Song from '@models/song';
@@ -120,6 +120,12 @@ export default class Player {
 	 * Shift the queue in a certain direction
 	 */
 	move = (direction: 'forward' | 'back'): [old: string | void, current: string | void] => {
+		const voice = new VoiceManager(this.guildID);
+
+		if (!voice.isConnected()) {
+			throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
+		}
+
 		const player = this.get();
 
 		let newPlaying: Song | undefined;
@@ -135,8 +141,6 @@ export default class Player {
 		}
 
 		player.playing = newPlaying;
-
-		const voice = new VoiceManager(this.guildID);
 
 		if (!player.playing) {
 			voice.disconnect();

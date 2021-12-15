@@ -8,6 +8,7 @@ import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import Song from '@models/song';
 import VoiceManager from '@utils/voice';
+import { capitalize, secondsToReadable } from '@src/utils';
 
 export const play: Command = async (interaction) => {
 	const url = interaction.options.get('url')?.value;
@@ -38,36 +39,16 @@ export const play: Command = async (interaction) => {
 
 		if (!connected) return;
 
+		let song: Song | void;
+
 		if (url) {
-			const song = await Controller.info(url as string).catch(async (error: BotError) => {
+			song = await Controller.info(url as string).catch(async (error: BotError) => {
 				if (error.type == ErrorType.NotFound) {
 					await interaction.reply('Could not find a song with that url');
 
 					return;
 				}
 			});
-
-			if (!song) return;
-
-			const embed = createEmbed(song);
-
-			const player = new Player(guildID);
-
-			player.add(song);
-
-			if (player.isPlaying()) {
-				embed.setTitle(`Added \`${song.name}\` to the queue`);
-			} else {
-				player.move('forward');
-
-				voice.play(song);
-
-				embed.setTitle(`Now playing \`${song.name}\``);
-			}
-
-			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
-
-			return;
 		}
 
 		if (keywords) {
@@ -75,8 +56,30 @@ export const play: Command = async (interaction) => {
 
 			interaction.followUp(`Searching for \`${keywords}\``);
 
-			await Controller.search(keywords.split(' '), platform as string);
+			const songs = await Controller.search(keywords.split(' '), 1, platform as string);
+
+			song = songs[0];
 		}
+
+		if (!song) return;
+
+		const embed = createEmbed(song);
+
+		const player = new Player(guildID);
+
+		player.add(song);
+
+		if (player.isPlaying()) {
+			embed.setTitle(`Added \`${song.name}\` to the queue`);
+		} else {
+			player.move('forward');
+
+			voice.play(song);
+
+			embed.setTitle(`Now playing \`${song.name}\``);
+		}
+
+		await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
 
 		return;
 	}
@@ -93,6 +96,6 @@ const createActionRow = () =>
 
 const createEmbed = (song: Song) =>
 	new DefaultEmbed()
-		.addField('Platform', song.platform, true)
-		.addField('Length', song.length.toString(), true)
+		.addField('Platform', capitalize(song.platform), true)
+		.addField('Length', secondsToReadable(song.length), true)
 		.addField('Artists', song.artists.join(', '), true);

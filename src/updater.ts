@@ -1,13 +1,11 @@
-import { ClientApplication } from 'discord.js';
+import * as Logger from '@utils/logger';
 
+import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 import axios, { AxiosError } from 'axios';
 
 import Cache from '@utils/cache';
-import * as Logger from '@utils/logger';
-
+import { ClientApplication } from 'discord.js';
 import commands from '@src/config/commands.config';
-
-import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;
 
@@ -27,9 +25,9 @@ const updater = async (application: ClientApplication): Promise<void> => {
 				return res;
 			})
 			.catch((error: AxiosError) => {
-				Logger.log('Failed to update commands:');
+				Logger.warn('Failed to update commands:');
 
-				Logger.log(error.response?.data);
+				console.error(error.response?.data.errors);
 			});
 	}
 };
