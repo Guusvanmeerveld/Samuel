@@ -1,5 +1,5 @@
 export default class BotError {
-	constructor(public message: string, public type?: ErrorType) {}
+	constructor(public message: string | ErrorType) {}
 }
 
 export enum ErrorType {

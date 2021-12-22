@@ -1,4 +1,4 @@
-import { ApplicationCommand, OptionType } from '@models/command';
+import { ApplicationCommand, Option, OptionType } from '@models/command';
 
 const platformOption = {
 	name: 'platform',
@@ -17,15 +17,15 @@ const platformOption = {
 	],
 };
 
-const keywordsOptions = {
+const keywordsOptions = (required: boolean): Option => ({
 	name: 'keywords',
 	description: 'Keywords to search for',
-	required: true,
+	required,
 	type: OptionType.STRING,
-};
+});
 
 const playOptions = [
-	keywordsOptions,
+	keywordsOptions(false),
 	platformOption,
 	{
 		name: 'url',
@@ -90,7 +90,7 @@ const config: ApplicationCommand[] = [
 	{
 		name: 'search',
 		description: 'Search for a song',
-		options: [keywordsOptions, platformOption],
+		options: [keywordsOptions(true), platformOption],
 	},
 	{
 		name: 'ping',

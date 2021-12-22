@@ -55,7 +55,7 @@ export default class VoiceManager {
 			});
 
 			if (!this.connection) {
-				throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
+				throw new BotError(ErrorType.VoiceNotConnected);
 			}
 
 			this.connection.on('stateChange', (oldState, newState) => {
@@ -75,24 +75,26 @@ export default class VoiceManager {
 	// };
 
 	public disconnect = async (): Promise<void> => {
-		if (!this.connection)
-			throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
+		if (!this.connection) throw new BotError(ErrorType.VoiceNotConnected);
 
 		this.connection.destroy();
 	};
 
-	public play = (song: Song, onIdle = this.defaultOnIdle): void => {
+	public play = async (song: Song, onIdle = this.defaultOnIdle): Promise<void> => {
 		if (!this.connection) {
-			throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
+			throw new BotError(ErrorType.VoiceNotConnected);
 		}
 
 		let stream: AudioStream | undefined;
 
-		if (song.platform == 'soundcloud') {
-			stream = m3u8stream(song.streamURL);
+		switch (song.platform) {
+			case 'soundcloud':
+				stream = m3u8stream(await song.streamURL());
+
+				break;
 		}
 
-		if (!stream) throw new BotError('Could not fetch remote audio stream', ErrorType.NotFound);
+		if (!stream) throw new BotError(ErrorType.NotFound);
 
 		const { controller } = this.player.get();
 

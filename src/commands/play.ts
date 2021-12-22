@@ -7,6 +7,7 @@ import Command from '@models/command';
 import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import Song from '@models/song';
+import Playlist from '@models/playlist';
 import VoiceManager from '@utils/voice';
 import { capitalize, secondsToReadable } from '@src/utils';
 
@@ -31,7 +32,9 @@ export const play: Command = async (interaction) => {
 		const connected = await voice
 			.join(member.voice.channelId)
 			.catch(async (e: BotError) => {
-				await interaction.reply(e.message);
+				if (typeof e.message == 'string') {
+					await interaction.reply(e.message);
+				}
 
 				return false;
 			})
@@ -39,11 +42,11 @@ export const play: Command = async (interaction) => {
 
 		if (!connected) return;
 
-		let song: Song | void;
+		let playable: Song | Playlist | void;
 
 		if (url) {
-			song = await Controller.info(url as string).catch(async (error: BotError) => {
-				if (error.type == ErrorType.NotFound) {
+			playable = await Controller.info(url as string).catch(async (error: BotError) => {
+				if (error.message == ErrorType.NotFound) {
 					await interaction.reply('Could not find a song with that url');
 
 					return;
@@ -58,28 +61,59 @@ export const play: Command = async (interaction) => {
 
 			const songs = await Controller.search(keywords.split(' '), 1, platform as string);
 
-			song = songs[0];
+			playable = songs[0];
 		}
 
-		if (!song) return;
+		if (!playable) return;
 
-		const embed = createEmbed(song);
+		if (playable.isSong()) {
+			const embed = createSongEmbed(playable);
 
-		const player = new Player(guildID);
+			const player = new Player(guildID);
 
-		player.add(song);
+			player.add(playable);
 
-		if (player.isPlaying()) {
-			embed.setTitle(`Added \`${song.name}\` to the queue`);
-		} else {
-			player.move('forward');
+			if (player.isPlaying()) {
+				embed.setTitle(`Added \`${playable.name}\` to the queue`);
+			} else {
+				player.move('forward');
 
-			voice.play(song);
+				voice.play(playable);
 
-			embed.setTitle(`Now playing \`${song.name}\``);
+				embed.setTitle(`Now playing \`${playable.name}\``);
+			}
+
+			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
 		}
 
-		await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
+		if (playable.isPlaylist()) {
+			if (playable.songs.length == 0) {
+				await interaction.followUp('Playlist does not contain any songs');
+				return;
+			}
+
+			const embed = createPlaylistEmbed(playable);
+
+			const player = new Player(guildID);
+
+			playable.songs.forEach((song) => player.add(song));
+
+			const first = playable.songs.shift();
+
+			if (!first) return;
+
+			if (player.isPlaying()) {
+				embed.setTitle(`Added \`${playable.name}\` to the queue`);
+			} else {
+				player.move('forward');
+
+				voice.play(first);
+
+				embed.setTitle(`Now playing \`${playable.name}\``);
+			}
+
+			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
+		}
 
 		return;
 	}
@@ -94,8 +128,17 @@ const createActionRow = () =>
 		new MessageButton().setStyle('PRIMARY').setLabel('Next').setCustomId('next-song')
 	);
 
-const createEmbed = (song: Song) =>
+const createSongEmbed = (song: Song) =>
 	new DefaultEmbed()
-		.addField('Platform', capitalize(song.platform), true)
 		.addField('Length', secondsToReadable(song.length), true)
-		.addField('Artists', song.artists.join(', '), true);
+		.addField('Artists', song.artists.join(', '), true)
+		.addField('Platform', capitalize(song.platform), true)
+		.setThumbnail(song.artwork);
+
+const createPlaylistEmbed = (playlist: Playlist) =>
+	new DefaultEmbed()
+		.addField('Length', secondsToReadable(playlist.total_length), true)
+		.addField('Song count', playlist.songs.length.toString(), true)
+		.addField('Created by', playlist.user.name, true)
+		.addField('Platform', capitalize(playlist.platform), true)
+		.setThumbnail(playlist.artwork);
