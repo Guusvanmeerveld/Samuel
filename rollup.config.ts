@@ -16,7 +16,14 @@ export default {
 		dir: 'dist',
 		format: 'cjs',
 	},
-	external: ['discord.js', '@discordjs/voice', 'ioredis'],
+	external: [
+		'discord.js',
+		'@discordjs/voice',
+		'@discordjs/opus',
+		'ioredis',
+		'ffmpeg-static',
+		'libsodium-wrappers',
+	],
 	plugins: [
 		dev && run(),
 		json(),

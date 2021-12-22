@@ -13,12 +13,13 @@
 	},
 	"dependencies": {
 		"@discordjs/voice": "^0.7.5",
+		"@discordjs/opus": "^0.6.0",
 		"discord.js": "^13.3.1",
-		"ffmpeg-static": "^4.4.0",
-		"ioredis": "^4.27.10"
+		"ioredis": "^4.27.10",
+		"libsodium-wrappers": "^0.7.9",
+		"ffmpeg-static": "^4.4.0"
 	},
 	"devDependencies": {
-		"@discordjs/opus": "^0.6.0",
 		"@rollup/plugin-commonjs": "^21.0.1",
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^13.0.6",
@@ -35,7 +36,6 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"fs-extra": "^10.0.0",
 		"kleur": "^4.1.4",
-		"libsodium-wrappers": "^0.7.9",
 		"m3u8stream": "^0.8.4",
 		"ping": "^0.4.1",
 		"prettier": "2.2.1",
