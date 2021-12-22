@@ -1,8 +1,6 @@
-import Playlist from '@models/playlist';
+import { Playable } from '@models/player';
 
-interface Song {
-	isPlaylist: () => this is Playlist;
-	isSong: () => this is Song;
+interface Song extends Playable {
 	url: string;
 	artwork: string;
 	streamURL: () => Promise<string>;

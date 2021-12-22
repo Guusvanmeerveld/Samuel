@@ -10,6 +10,7 @@ import Song from '@models/song';
 import Playlist from '@models/playlist';
 import VoiceManager from '@utils/voice';
 import { capitalize, secondsToReadable } from '@src/utils';
+import { Playable } from '@models/player';
 
 export const play: Command = async (interaction) => {
 	const url = interaction.options.get('url')?.value;
@@ -42,7 +43,7 @@ export const play: Command = async (interaction) => {
 
 		if (!connected) return;
 
-		let playable: Song | Playlist | void;
+		let playable: Playable | void;
 
 		if (url) {
 			playable = await Controller.info(url as string).catch(async (error: BotError) => {

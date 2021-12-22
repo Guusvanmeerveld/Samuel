@@ -1,5 +1,7 @@
 import { AudioPlayer } from '@discordjs/voice';
+
 import Song from '@models/song';
+import Playlist from '@models/playlist';
 
 interface Player {
 	controller: AudioPlayer;
@@ -9,6 +11,11 @@ interface Player {
 	playing?: Song;
 	loop: boolean;
 	volume: number;
+}
+
+export interface Playable {
+	isPlaylist: () => this is Playlist;
+	isSong: () => this is Song;
 }
 
 export default Player;

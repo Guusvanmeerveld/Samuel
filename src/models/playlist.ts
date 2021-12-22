@@ -1,8 +1,7 @@
-import Song, { Platform } from './song';
+import { Playable } from '@models/player';
+import Song, { Platform } from '@models/song';
 
-export default interface Playlist {
-	isPlaylist: () => this is Playlist;
-	isSong: () => this is Song;
+export default interface Playlist extends Playable {
 	songs: Song[];
 	url: string;
 	artwork: string;
