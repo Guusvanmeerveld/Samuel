@@ -1,10 +1,11 @@
-import * as Logger from '@utils/logger';
+import { ClientApplication } from 'discord.js';
 
-import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 import axios, { AxiosError } from 'axios';
 
 import Cache from '@utils/cache';
-import { ClientApplication } from 'discord.js';
+import * as Logger from '@utils/logger';
+
+import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 import commands from '@src/config/commands.config';
 
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;

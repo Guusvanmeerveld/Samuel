@@ -5,5 +5,15 @@
     "singleQuote": true,
     "tabWidth": 2,
     "printWidth": 100,
-    "arrowParens": "always"
+    "arrowParens": "always",
+    "importOrderSeparation": true,
+	"importOrder": [
+		"^discord.js",
+		"^@discordjs/.*",
+		"^axios",
+		"^@models/.*",
+		"^@utils/.*",
+		"^@src/.*"
+	]
+
 }

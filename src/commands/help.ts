@@ -2,9 +2,8 @@ import Command from '@models/command';
 
 import { DefaultEmbed } from '@utils/embed';
 
-import * as Utils from '@src/utils';
-
 import Commands from '@src/config/commands.config';
+import * as Utils from '@src/utils';
 
 export const help: Command = async (interaction) => {
 	const toFind = interaction.options.get('command');

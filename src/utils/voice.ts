@@ -1,4 +1,6 @@
-import * as Logger from '@utils/logger';
+import m3u8stream from 'm3u8stream';
+
+import { Permissions } from 'discord.js';
 
 import {
 	AudioPlayerStatus,
@@ -7,13 +9,14 @@ import {
 	getVoiceConnection,
 	joinVoiceChannel,
 } from '@discordjs/voice';
-import BotError, { ErrorType } from '@models/errors';
 
-import { Permissions } from 'discord.js';
-import Player from '@utils/player';
+import BotError, { ErrorType } from '@models/errors';
 import Song from '@models/song';
+
+import * as Logger from '@utils/logger';
+import Player from '@utils/player';
+
 import client from '@src/client';
-import m3u8stream from 'm3u8stream';
 
 type AudioStream = m3u8stream.Stream;
 

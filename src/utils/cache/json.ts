@@ -1,12 +1,10 @@
-import { ensureFile, readFile, readJSON, writeJSON } from 'fs-extra';
-
 import { hash } from '.';
-
+import { ensureFile, readFile, readJSON, writeJSON } from 'fs-extra';
 import { join } from 'path';
 
-import { CACHE_LOCATION } from '@src/config';
-
 import { deleter, getter, setter } from '@models/cache';
+
+import { CACHE_LOCATION } from '@src/config';
 
 const CACHE_FILE = join(CACHE_LOCATION, 'cache.json');
 

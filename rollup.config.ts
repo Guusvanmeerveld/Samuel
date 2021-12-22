@@ -1,12 +1,9 @@
-import run from '@rollup/plugin-run';
-
-import json from '@rollup/plugin-json';
-
-import typescript from 'rollup-plugin-typescript';
-import tsConfigPaths from 'rollup-plugin-ts-paths';
-
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
+import run from '@rollup/plugin-run';
+import tsConfigPaths from 'rollup-plugin-ts-paths';
+import typescript from 'rollup-plugin-typescript';
 
 const dev = process.env.ROLLUP_WATCH === 'true';
 

@@ -1,7 +1,8 @@
-import Commands from '@src/commands';
 import { Interaction } from 'discord.js';
-import client from '@src/client';
+
 import handleButtons from '@src/buttons';
+import client from '@src/client';
+import Commands from '@src/commands';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
 	if (interaction.isCommand()) {

@@ -1,9 +1,9 @@
-import Command from '@models/command';
-
-import { help } from './help';
-import { play } from './play';
 import { disconnect } from './disconnect';
+import { help } from './help';
 import { join } from './join';
+import { play } from './play';
+
+import Command from '@models/command';
 
 const Commands = new Map<string, Command>();
 

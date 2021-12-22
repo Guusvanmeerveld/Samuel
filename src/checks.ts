@@ -1,8 +1,7 @@
 import ping from 'ping';
 
-import * as Logger from '@utils/logger';
-
 import { testToken } from '@utils/controller/soundcloud';
+import * as Logger from '@utils/logger';
 
 import { PING_ADDRESS, SOUNDCLOUD_TOKEN } from '@src/config';
 

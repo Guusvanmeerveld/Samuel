@@ -1,16 +1,15 @@
-import Song from '@models/song';
+import * as soundcloud from './soundcloud';
 
-import { getter, searcher } from '@models/platform';
 import BotError, { ErrorType } from '@models/errors';
+import { getter, searcher } from '@models/platform';
+import Playlist from '@models/playlist';
+import Song from '@models/song';
 
 import {
 	SEARCH_RESULT_LIMIT,
 	SOUNDCLOUD_REGEX,
 	SOUNDCLOUD_SETS_REGEX,
 } from '@src/config/constants.config';
-
-import * as soundcloud from './soundcloud';
-import Playlist from '@models/playlist';
 
 export const search = async (
 	keywords: string[],

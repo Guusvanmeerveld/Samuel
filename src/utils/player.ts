@@ -1,9 +1,10 @@
+import Collection from '@discordjs/collection';
 import { NoSubscriberBehavior, createAudioPlayer } from '@discordjs/voice';
 
 import BotError, { ErrorType } from '@models/errors';
-import Collection from '@discordjs/collection';
 import PlayerModel from '@models/player';
 import Song from '@models/song';
+
 import VoiceManager from '@utils/voice';
 
 const GlobalPlayerModel = new Collection<string, PlayerModel>();

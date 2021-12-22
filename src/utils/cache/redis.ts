@@ -1,10 +1,9 @@
+import { hash } from '.';
 import Redis from 'ioredis';
 
-import { hash } from '.';
+import { getter, setter, deleter } from '@models/cache';
 
 import * as Logger from '@utils/logger';
-
-import { getter, setter, deleter } from '@models/cache';
 
 import { REDIS_URL } from '@src/config';
 

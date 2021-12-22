@@ -1,7 +1,7 @@
 import { AudioPlayer } from '@discordjs/voice';
 
-import Song from '@models/song';
 import Playlist from '@models/playlist';
+import Song from '@models/song';
 
 interface Player {
 	controller: AudioPlayer;

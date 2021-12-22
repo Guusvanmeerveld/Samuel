@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import Song from '@models/song';
-import Playlist from '@models/playlist';
 import BotError, { ErrorType } from '@models/errors';
 import { getter, searcher } from '@models/platform';
+import Playlist from '@models/playlist';
+import Song from '@models/song';
 import { SearchResult, Track, Set } from '@models/soundcloud';
 
 import Cache from '@utils/cache';

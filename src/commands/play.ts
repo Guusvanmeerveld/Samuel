@@ -1,16 +1,17 @@
-import * as Controller from '@utils/controller';
-
-import BotError, { ErrorType } from '@models/errors';
 import { GuildMember, MessageActionRow, MessageButton } from 'discord.js';
 
 import Command from '@models/command';
+import BotError, { ErrorType } from '@models/errors';
+import { Playable } from '@models/player';
+import Playlist from '@models/playlist';
+import Song from '@models/song';
+
+import * as Controller from '@utils/controller';
 import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
-import Song from '@models/song';
-import Playlist from '@models/playlist';
 import VoiceManager from '@utils/voice';
+
 import { capitalize, secondsToReadable } from '@src/utils';
-import { Playable } from '@models/player';
 
 export const play: Command = async (interaction) => {
 	const url = interaction.options.get('url')?.value;

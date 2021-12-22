@@ -1,8 +1,7 @@
-import { ColorResolvable } from 'discord.js';
-
 import { config } from 'dotenv';
-
 import { join } from 'path';
+
+import { ColorResolvable } from 'discord.js';
 
 config();
 
