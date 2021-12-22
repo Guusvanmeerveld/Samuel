@@ -12,15 +12,22 @@ export const join: Command = async (interaction) => {
 
 	const channel = member.voice.channelId!;
 
+	if (!channel) {
+		await interaction.reply('You are not connected to a voice channel');
+		return;
+	}
+
 	const voice = new VoiceManager(guildID!);
 
 	voice
 		.join(channel)
-		.catch(async (e: BotError) => interaction.reply(e.message))
 		.then(
 			async () =>
 				await interaction.reply(
 					`Succesfully joined \`${member.voice.channel?.name ?? 'Unknown channel'}\``
 				)
+		)
+		.catch(async (e: BotError) =>
+			typeof e.message == 'string' ? await interaction.reply(e.message) : null
 		);
 };

@@ -124,7 +124,7 @@ export default class Player {
 		const voice = new VoiceManager(this.guildID);
 
 		if (!voice.isConnected()) {
-			throw new BotError('Not connected to any voice channel', ErrorType.VoiceNotConnected);
+			throw new BotError(ErrorType.VoiceNotConnected);
 		}
 
 		const player = this.get();

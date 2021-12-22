@@ -42,13 +42,21 @@ export default class VoiceManager {
 
 		const channel = guild.channels.resolve(channelID);
 
-		if (channel?.isVoice()) {
-			if (!channel) throw new BotError('Invalid channel');
+		if (!channel) throw new BotError('Invalid channel');
 
+		if (this.isConnected() && this.connection?.joinConfig.channelId == channelID) {
+			throw new BotError(`Already connected to \`${channel.name}\``);
+		}
+
+		if (channel?.isVoice()) {
 			const permissions = channel.permissionsFor(guild.me!);
 
 			if (!permissions.has(Permissions.FLAGS.CONNECT)) {
-				throw new BotError('Not allowed to join voice channel');
+				throw new BotError('Not allowed to join your voice channel');
+			}
+
+			if (!permissions.has(Permissions.FLAGS.SPEAK)) {
+				throw new BotError('Not allowed to speak in your voice channel');
 			}
 
 			this.connection = joinVoiceChannel({
@@ -81,6 +89,12 @@ export default class VoiceManager {
 		if (!this.connection) throw new BotError(ErrorType.VoiceNotConnected);
 
 		this.connection.destroy();
+	};
+
+	public stop = (): boolean => {
+		const { controller } = this.player.get();
+
+		return controller.stop();
 	};
 
 	public play = async (song: Song, onIdle = this.defaultOnIdle): Promise<void> => {

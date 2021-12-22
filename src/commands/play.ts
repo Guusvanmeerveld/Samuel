@@ -35,7 +35,7 @@ export const play: Command = async (interaction) => {
 			.join(member.voice.channelId)
 			.catch(async (e: BotError) => {
 				if (typeof e.message == 'string') {
-					await interaction.reply(e.message);
+					await interaction.followUp(e.message);
 				}
 
 				return false;
@@ -49,7 +49,7 @@ export const play: Command = async (interaction) => {
 		if (url) {
 			playable = await Controller.info(url as string).catch(async (error: BotError) => {
 				if (error.message == ErrorType.NotFound) {
-					await interaction.reply('Could not find a song with that url');
+					await interaction.followUp('Could not find a song with that url');
 
 					return;
 				}
