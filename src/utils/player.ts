@@ -94,12 +94,18 @@ export default class Player {
 	/**
 	 *
 	 */
-	pause = (): boolean => {
+	pause = async (toggle = true, pause?: boolean): Promise<boolean> => {
 		const player = this.get();
 
-		if (!player.playing) throw new BotError('There is nothing playing right now.');
+		if (!player.playing) throw new BotError(ErrorType.NothingPlaying);
 
-		player.paused = !player.paused;
+		if (toggle) {
+			player.paused = !player.paused;
+		}
+
+		if (!toggle && pause != undefined) {
+			player.paused = pause;
+		}
 
 		player.paused ? player.controller.pause() : player.controller.unpause();
 
@@ -112,7 +118,7 @@ export default class Player {
 	stop = async (): Promise<void> => {
 		const { playing, controller } = this.get();
 
-		if (!playing) throw new BotError('There is nothing playing right now.');
+		if (!playing) throw new BotError(ErrorType.NothingPlaying);
 
 		controller.stop();
 	};

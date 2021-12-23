@@ -53,7 +53,12 @@ export const playlist: getter = async (url) => {
 	if (cached && cached.expires > Date.now()) {
 		cached.songs = cached.songs.map(cachedToSong);
 
-		return { ...cached, released: new Date(cached.created) };
+		return {
+			...cached,
+			released: new Date(cached.created),
+			isPlaylist: () => true,
+			isSong: () => false,
+		};
 	}
 
 	return await request('/resolve', {

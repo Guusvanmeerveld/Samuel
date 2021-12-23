@@ -27,7 +27,5 @@ export const join: Command = async (interaction) => {
 					`Succesfully joined \`${member.voice.channel?.name ?? 'Unknown channel'}\``
 				)
 		)
-		.catch(async (e: BotError) =>
-			typeof e.message == 'string' ? await interaction.reply(e.message) : null
-		);
+		.catch(async (e: BotError) => await interaction.reply(e.message));
 };

@@ -1,5 +1,7 @@
 import { ButtonInteraction } from 'discord.js';
 
+import { ErrorType } from '@models/errors';
+
 import Player from '@utils/player';
 
 const UNKNOWN = 'Nothing';
@@ -19,9 +21,9 @@ const handleButtons = async (interaction: ButtonInteraction): Promise<void> => {
 				break;
 
 			case 'pause-song':
-				const paused = player.pause();
+				const paused = await player.pause();
 
-				interaction.reply(paused ? 'Paused the current song' : 'Resumed the current song.');
+				interaction.reply(paused ? ErrorType.Paused : ErrorType.Resumed);
 
 				break;
 
