@@ -3,6 +3,7 @@ import { Client, Intents } from 'discord.js';
 import Cache from '@utils/cache';
 import * as Logger from '@utils/logger';
 
+import lang from '@src/lang';
 import updateCommands from '@src/updater';
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES] });
@@ -16,9 +17,9 @@ client.on('ready', async () => {
 
 	console.timeEnd('bot-start');
 
-	Logger.log(`Started up client ${client.user.tag}`);
+	Logger.log(lang.bot.startup(client.user.tag));
 
-	client.user.setActivity({ name: '/help', type: 'LISTENING' });
+	client.user.setActivity({ name: lang.bot.activity.name, type: 'LISTENING' });
 
 	await Cache.init();
 

@@ -10,6 +10,7 @@
 	"importOrder": [
 		"^discord.js",
 		"^@discordjs/.*",
+        "^ioredis",
 		"^axios",
 		"^@models/.*",
 		"^@utils/.*",

@@ -10,13 +10,14 @@ import {
 	joinVoiceChannel,
 } from '@discordjs/voice';
 
-import BotError, { ErrorType } from '@models/errors';
+import BotError from '@models/errors';
 import Song from '@models/song';
 
 import * as Logger from '@utils/logger';
 import Player from '@utils/player';
 
 import client from '@src/client';
+import lang from '@src/lang';
 
 type AudioStream = m3u8stream.Stream;
 
@@ -45,18 +46,18 @@ export default class VoiceManager {
 		if (!channel) throw new BotError('Invalid channel');
 
 		if (this.isConnected() && this.connection?.joinConfig.channelId == channelID) {
-			throw new BotError(`Already connected to \`${channel.name}\``);
+			throw new BotError(lang.voice.alreadyConnected(channel.name));
 		}
 
 		if (channel?.isVoice()) {
 			const permissions = channel.permissionsFor(guild.me!);
 
 			if (!permissions.has(Permissions.FLAGS.CONNECT)) {
-				throw new BotError('Not allowed to join your voice channel');
+				throw new BotError(lang.voice.notAllowedToJoin);
 			}
 
 			if (!permissions.has(Permissions.FLAGS.SPEAK)) {
-				throw new BotError('Not allowed to speak in your voice channel');
+				throw new BotError(lang.voice.notAllowedToSpeak);
 			}
 
 			this.connection = joinVoiceChannel({
@@ -66,7 +67,7 @@ export default class VoiceManager {
 			});
 
 			if (!this.connection) {
-				throw new BotError(ErrorType.VoiceNotConnected);
+				throw new BotError(lang.voice.notConnected);
 			}
 
 			this.connection.on('stateChange', (oldState, newState) => {
@@ -86,7 +87,7 @@ export default class VoiceManager {
 	// };
 
 	public disconnect = async (): Promise<void> => {
-		if (!this.connection) throw new BotError(ErrorType.VoiceNotConnected);
+		if (!this.connection) throw new BotError(lang.voice.notConnected);
 
 		this.connection.destroy();
 	};
@@ -99,7 +100,7 @@ export default class VoiceManager {
 
 	public play = async (song: Song, onIdle = this.defaultOnIdle): Promise<void> => {
 		if (!this.connection) {
-			throw new BotError(ErrorType.VoiceNotConnected);
+			throw new BotError(lang.voice.notConnected);
 		}
 
 		let stream: AudioStream | undefined;
@@ -111,7 +112,7 @@ export default class VoiceManager {
 				break;
 		}
 
-		if (!stream) throw new BotError(ErrorType.NotFound);
+		if (!stream) throw new BotError(lang.song.notFound);
 
 		const { controller } = this.player.get();
 

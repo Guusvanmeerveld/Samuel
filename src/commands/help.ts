@@ -3,6 +3,7 @@ import Command from '@models/command';
 import { DefaultEmbed } from '@utils/embed';
 
 import Commands from '@src/config/commands.config';
+import lang from '@src/lang';
 import * as Utils from '@src/utils';
 
 export const help: Command = async (interaction) => {
@@ -13,12 +14,12 @@ export const help: Command = async (interaction) => {
 
 		if (command) {
 			const embed = new DefaultEmbed()
-				.setTitle(`Showing info for the command \`${command.name}\``)
-				.setDescription(`Description: \`${command.description}\``);
+				.setTitle(lang.commands.help.command.title(command.name))
+				.setDescription(lang.commands.help.command.description(command.description));
 
 			if (command.options)
 				embed.addField(
-					'Options:',
+					lang.commands.help.command.options,
 					`\`${command.options.map((option) => option.name)?.join(', ')}\``
 				);
 
@@ -27,7 +28,7 @@ export const help: Command = async (interaction) => {
 			return;
 		}
 
-		interaction.reply(`❌ Could not find a command matching \`${toFind.value}\`.`);
+		interaction.reply(lang.commands.help.command.notFound(toFind.value as string));
 
 		return;
 	}
@@ -37,18 +38,21 @@ export const help: Command = async (interaction) => {
 	const list = Utils.chunk(Commands);
 
 	if (page <= 0 || page > list.length) {
-		interaction.reply(`\`${page}\` is not a valid page number.`);
+		interaction.reply(lang.commands.help.list.page(page));
 		return;
 	}
 
 	const commands = list[page - 1];
 
 	const embed = new DefaultEmbed()
-		.setTitle('Showing a list of all commands')
-		.setFooter(`Page ${page}/${list.length}`);
+		.setTitle(lang.commands.help.list.title)
+		.setFooter(lang.commands.help.list.footer(page, list.length));
 
 	commands.forEach((command) => {
-		embed.addField(`Name: \`${command.name}\``, `Description: \`${command.description}\``);
+		embed.addField(
+			lang.commands.help.list.name(command.name),
+			lang.commands.help.list.description(command.description)
+		);
 	});
 
 	interaction.reply({ embeds: [embed] });

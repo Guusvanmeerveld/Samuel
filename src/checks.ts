@@ -4,30 +4,31 @@ import { testToken } from '@utils/controller/soundcloud';
 import * as Logger from '@utils/logger';
 
 import { PING_ADDRESS, SOUNDCLOUD_TOKEN } from '@src/config';
+import lang from '@src/lang';
 
 const preStartChecks = async (): Promise<void> => {
-	Logger.log('Checking network status...');
+	Logger.log(lang.checks.network.status);
 
 	await ping.promise.probe(PING_ADDRESS).then(({ alive }) => {
-		if (alive) Logger.log('Network check succeeded');
+		if (alive) Logger.log(lang.checks.network.success);
 		else {
-			Logger.error(`Could not ping ${PING_ADDRESS}, stopping`);
+			Logger.error(lang.checks.network.error(PING_ADDRESS));
 			process.exit();
 		}
 	});
 
 	if (!SOUNDCLOUD_TOKEN) {
-		Logger.error('Could not find SOUNDCLOUD_TOKEN variable, stopping');
+		Logger.error(lang.checks.soundcloud.notFound);
 		process.exit();
 	}
 
-	Logger.log('Validating SoundCloud token...');
+	Logger.log(lang.checks.soundcloud.status);
 
 	const isValid = await testToken();
 
-	if (isValid) Logger.log('SoundCloud token check succeeded');
+	if (isValid) Logger.log(lang.checks.soundcloud.success);
 	else {
-		Logger.error('Could not validate Soundcloud token, stopping');
+		Logger.error(lang.checks.soundcloud.error);
 		process.exit();
 	}
 };

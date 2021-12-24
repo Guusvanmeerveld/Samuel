@@ -48,11 +48,9 @@ export const play: Command = async (interaction) => {
 
 		if (url) {
 			playable = await Controller.info(url as string).catch(async (error: BotError) => {
-				if (error.message == ErrorType.NotFound) {
-					await interaction.followUp('Could not find a song with that url');
+				await interaction.followUp(error.message);
 
-					return;
-				}
+				return;
 			});
 		}
 

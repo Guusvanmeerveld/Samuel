@@ -1,11 +1,13 @@
 import Collection from '@discordjs/collection';
 import { NoSubscriberBehavior, createAudioPlayer } from '@discordjs/voice';
 
-import BotError, { ErrorType } from '@models/errors';
+import BotError from '@models/errors';
 import PlayerModel from '@models/player';
 import Song from '@models/song';
 
 import VoiceManager from '@utils/voice';
+
+import lang from '@src/lang';
 
 const GlobalPlayerModel = new Collection<string, PlayerModel>();
 
@@ -97,7 +99,7 @@ export default class Player {
 	pause = async (toggle = true, pause?: boolean): Promise<boolean> => {
 		const player = this.get();
 
-		if (!player.playing) throw new BotError(ErrorType.NothingPlaying);
+		if (!player.playing) throw new BotError(lang.player.notPlaying);
 
 		if (toggle) {
 			player.paused = !player.paused;
@@ -118,7 +120,7 @@ export default class Player {
 	stop = async (): Promise<void> => {
 		const { playing, controller } = this.get();
 
-		if (!playing) throw new BotError(ErrorType.NothingPlaying);
+		if (!playing) throw new BotError(lang.player.notPlaying);
 
 		controller.stop();
 	};
@@ -126,11 +128,13 @@ export default class Player {
 	/**
 	 * Shift the queue in a certain direction
 	 */
-	move = (direction: 'forward' | 'back'): [old: string | void, current: string | void] => {
+	move = (
+		direction: 'forward' | 'back'
+	): [old: string | undefined, current: string | undefined] => {
 		const voice = new VoiceManager(this.guildID);
 
 		if (!voice.isConnected()) {
-			throw new BotError(ErrorType.VoiceNotConnected);
+			throw new BotError(lang.voice.notConnected);
 		}
 
 		const player = this.get();

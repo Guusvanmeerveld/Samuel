@@ -3,6 +3,8 @@ import BotError from '@models/errors';
 
 import VoiceManager from '@utils/voice';
 
+import lang from '@src/lang';
+
 export const disconnect: Command = async (interaction) => {
 	const guildID = interaction.guildId;
 
@@ -10,8 +12,6 @@ export const disconnect: Command = async (interaction) => {
 
 	voice
 		.disconnect()
-		.then(async () => await interaction.reply('Disconnected from the voice channel'))
-		.catch(async (e: BotError) =>
-			typeof e.message == 'string' ? interaction.reply(e.message) : null
-		);
+		.then(async () => await interaction.reply(lang.voice.disconnected))
+		.catch(async (e: BotError) => await interaction.reply(e.message));
 };

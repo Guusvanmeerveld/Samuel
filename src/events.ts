@@ -3,6 +3,7 @@ import { Interaction } from 'discord.js';
 import handleButtons from '@src/buttons';
 import client from '@src/client';
 import Commands from '@src/commands';
+import lang from '@src/lang';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
 	if (interaction.isCommand()) {
@@ -10,9 +11,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 		if (command != undefined) {
 			await command(interaction).catch(async (error) => {
-				const message = 'An error occurred while processing your command :(';
-
-				await interaction.reply(message).catch(async () => await interaction.followUp(message));
+				await interaction
+					.reply(lang.commands.error)
+					.catch(async () => await interaction.followUp(lang.commands.error));
 
 				console.error(error);
 			});
@@ -20,7 +21,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 			return;
 		}
 
-		await interaction.reply('Could not find that command.');
+		await interaction.reply(lang.commands.notFound);
 
 		return;
 	}

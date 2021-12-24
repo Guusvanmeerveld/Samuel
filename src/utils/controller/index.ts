@@ -1,6 +1,6 @@
 import * as soundcloud from './soundcloud';
 
-import BotError, { ErrorType } from '@models/errors';
+import BotError from '@models/errors';
 import { getter, searcher } from '@models/platform';
 import Playlist from '@models/playlist';
 import Song from '@models/song';
@@ -10,6 +10,7 @@ import {
 	SOUNDCLOUD_REGEX,
 	SOUNDCLOUD_SETS_REGEX,
 } from '@src/config/constants.config';
+import lang from '@src/lang';
 
 export const search = async (
 	keywords: string[],
@@ -22,7 +23,7 @@ export const search = async (
 		searcher = soundcloud.search;
 	}
 
-	if (!searcher) throw new BotError(ErrorType.NotFound);
+	if (!searcher) throw new BotError(lang.song.notFound);
 
 	return await searcher(keywords, limit);
 };
@@ -38,7 +39,7 @@ export const info = async (url: string): Promise<Song | Playlist> => {
 		getter = soundcloud.playlist;
 	}
 
-	if (!getter) throw new BotError(ErrorType.NotFound);
+	if (!getter) throw new BotError(lang.song.notFound);
 
 	return await getter(url);
 };

@@ -1,4 +1,5 @@
 import { hash } from '.';
+
 import Redis from 'ioredis';
 
 import { getter, setter, deleter } from '@models/cache';
@@ -6,6 +7,7 @@ import { getter, setter, deleter } from '@models/cache';
 import * as Logger from '@utils/logger';
 
 import { REDIS_URL } from '@src/config';
+import lang from '@src/lang';
 
 let client: Redis.Redis;
 
@@ -13,11 +15,11 @@ export const init = (): void => {
 	client = new Redis(REDIS_URL);
 
 	client.on('connect', () => {
-		Logger.log('Connected with Redis db');
+		Logger.log(lang.redis.connected);
 	});
 
 	client.on('error', (error) => {
-		Logger.error('Failed to connect to Redis db:');
+		Logger.error(lang.redis.failed);
 
 		Logger.error(error);
 	});

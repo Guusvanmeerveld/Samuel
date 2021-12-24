@@ -7,6 +7,7 @@ import * as Logger from '@utils/logger';
 
 import { BOT_TOKEN, CACHE_TIMEOUT, DISCORD_API_VERSION } from '@src/config';
 import commands from '@src/config/commands.config';
+import lang from '@src/lang';
 
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;
 
@@ -21,12 +22,12 @@ const updater = async (application: ClientApplication): Promise<void> => {
 			.then(async (res) => {
 				await Cache.set('commandsUpdated', Date.now());
 
-				Logger.log(`Updated ${commands.length} command(s)`);
+				Logger.log(lang.commands.updater.updated(commands.length));
 
 				return res;
 			})
 			.catch((error: AxiosError) => {
-				Logger.warn('Failed to update commands:');
+				Logger.warn(lang.commands.updater.error);
 
 				console.error(error.response?.data.errors);
 			});

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import BotError, { ErrorType } from '@models/errors';
+import BotError from '@models/errors';
 import { getter, searcher } from '@models/platform';
 import Playlist from '@models/playlist';
 import Song from '@models/song';
@@ -9,6 +9,7 @@ import { SearchResult, Track, Set } from '@models/soundcloud';
 import Cache from '@utils/cache';
 
 import { CACHE_TIMEOUT, SOUNDCLOUD_TOKEN } from '@src/config';
+import lang from '@src/lang';
 
 const request = axios.create({
 	baseURL: 'https://api-v2.soundcloud.com/',
@@ -37,7 +38,7 @@ export const track: getter = async (url) => {
 			return song;
 		})
 		.catch(() => {
-			throw new BotError(ErrorType.NotFound);
+			throw new BotError(lang.song.notFound);
 		});
 };
 
@@ -106,7 +107,7 @@ const trackToSong = (track: Track): Song => {
 			transcoding.format.mime_type == 'audio/ogg; codecs="opus"'
 	);
 
-	if (!getStreamURL) throw new BotError(ErrorType.NotFound);
+	if (!getStreamURL) throw new BotError(lang.song.notFound);
 
 	const streamURL = () =>
 		axios

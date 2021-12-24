@@ -1,5 +1,7 @@
 import Command from '@models/command';
 
+import lang from '@src/lang';
+
 export const ping: Command = async (interaction) => {
-	await interaction.reply(`Pong! took \`${Date.now() - interaction.createdTimestamp}ms\``);
+	await interaction.reply(lang.commands.ping(Date.now() - interaction.createdAt.getTime()));
 };

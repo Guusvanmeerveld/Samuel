@@ -3,6 +3,8 @@ import Command from '@models/command';
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
+import lang from '@src/lang';
+
 export const stop: Command = async (interaction) => {
 	const guild = interaction.guild!;
 
@@ -14,12 +16,12 @@ export const stop: Command = async (interaction) => {
 
 	if (voice.isConnected() && playing) {
 		if (voice.stop()) {
-			await interaction.reply('Stopped the music');
+			await interaction.reply(lang.player.stop.success);
 			return;
 		}
 
-		await interaction.reply('Failed to stop the music');
+		await interaction.reply(lang.player.stop.failed);
 	}
 
-	await interaction.reply('There is nothing playing');
+	await interaction.reply(lang.player.notPlaying);
 };

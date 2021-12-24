@@ -48,3 +48,8 @@ export const SOUNDCLOUD_TOKEN = process.env.SOUNDCLOUD_TOKEN;
  * @optional
  */
 export const PING_ADDRESS = process.env.PING_ADDRESS ?? 'ping.archlinux.org';
+
+/**
+ * @optional
+ */
+export const LANGUAGE = process.env.LANGUAGE ?? 'en';
