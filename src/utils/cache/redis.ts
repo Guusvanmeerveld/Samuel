@@ -6,13 +6,15 @@ import { getter, setter, deleter } from '@models/cache';
 
 import * as Logger from '@utils/logger';
 
-import { REDIS_URL } from '@src/config';
+import { REDIS_PASSWORD, REDIS_URL } from '@src/config';
 import lang from '@src/lang';
 
 let client: Redis.Redis;
 
 export const init = (): void => {
-	client = new Redis(REDIS_URL);
+	client = new Redis(REDIS_URL, {
+		password: REDIS_PASSWORD,
+	});
 
 	client.on('connect', () => {
 		Logger.log(lang.redis.connected);

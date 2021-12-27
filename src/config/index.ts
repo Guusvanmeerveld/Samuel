@@ -40,6 +40,11 @@ export const CACHE_TIMEOUT = parseInt(process.env.CACHE_TIMEOUT as string) || 10
 export const REDIS_URL = process.env.REDIS_URL;
 
 /**
+ * @optional
+ */
+export const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+
+/**
  * @required
  */
 export const SOUNDCLOUD_TOKEN = process.env.SOUNDCLOUD_TOKEN;

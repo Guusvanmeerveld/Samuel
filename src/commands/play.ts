@@ -11,6 +11,7 @@ import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
+import lang from '@src/lang';
 import { capitalize, secondsToReadable } from '@src/utils';
 
 export const play: Command = async (interaction) => {
@@ -21,7 +22,7 @@ export const play: Command = async (interaction) => {
 		const member = interaction.member as GuildMember;
 
 		if (!member.voice.channelId) {
-			interaction.reply('You must be in a voice channel to use this command');
+			interaction.reply(lang.voice.memberNotConnected);
 			return;
 		}
 
@@ -57,7 +58,7 @@ export const play: Command = async (interaction) => {
 		if (keywords) {
 			const platform = interaction.options.get('platform')?.value;
 
-			interaction.followUp(`Searching for \`${keywords}\``);
+			interaction.followUp(lang.player.searching(keywords));
 
 			const songs = await Controller.search(keywords.split(' '), 1, platform as string);
 
@@ -74,13 +75,13 @@ export const play: Command = async (interaction) => {
 			player.add(playable);
 
 			if (player.isPlaying()) {
-				embed.setTitle(`Added \`${playable.name}\` to the queue`);
+				embed.setTitle(lang.player.queue.added(playable.name));
 			} else {
 				player.move('forward');
 
 				voice.play(playable);
 
-				embed.setTitle(`Now playing \`${playable.name}\``);
+				embed.setTitle(lang.player.queue.nowPlaying(playable.name));
 			}
 
 			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
@@ -88,7 +89,7 @@ export const play: Command = async (interaction) => {
 
 		if (playable.isPlaylist()) {
 			if (playable.songs.length == 0) {
-				await interaction.followUp('Playlist does not contain any songs');
+				await interaction.followUp(lang.player.playlistNoSongs);
 				return;
 			}
 
@@ -103,13 +104,13 @@ export const play: Command = async (interaction) => {
 			if (!first) return;
 
 			if (player.isPlaying()) {
-				embed.setTitle(`Added \`${playable.name}\` to the queue`);
+				embed.setTitle(lang.player.queue.added(playable.name));
 			} else {
 				player.move('forward');
 
 				voice.play(first);
 
-				embed.setTitle(`Now playing \`${playable.name}\``);
+				embed.setTitle(lang.player.queue.nowPlaying(playable.name));
 			}
 
 			await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
@@ -118,29 +119,35 @@ export const play: Command = async (interaction) => {
 		return;
 	}
 
-	interaction.reply('Please provide a url or some keywords to search for');
+	interaction.reply(lang.player.forgotKeywords);
 };
 
 const createActionRow = () =>
 	new MessageActionRow().addComponents(
-		new MessageButton().setStyle('PRIMARY').setLabel('Previous').setCustomId('previous-song'),
-		new MessageButton().setStyle('PRIMARY').setLabel('Play/Pause').setCustomId('pause-song'),
-		new MessageButton().setStyle('PRIMARY').setLabel('Next').setCustomId('next-song')
+		new MessageButton()
+			.setStyle('PRIMARY')
+			.setLabel(lang.buttons.previous)
+			.setCustomId('previous-song'),
+		new MessageButton()
+			.setStyle('PRIMARY')
+			.setLabel(lang.buttons.playpause)
+			.setCustomId('pause-song'),
+		new MessageButton().setStyle('PRIMARY').setLabel(lang.buttons.next).setCustomId('next-song')
 	);
 
 const createSongEmbed = (song: Song) =>
 	new DefaultEmbed()
-		.addField('Streams', song.streams.toString(), true)
-		.addField('Likes', song.likes.toString(), true)
-		.addField('Length', secondsToReadable(song.length), true)
-		.addField('Artists', song.artists.join(', '), true)
-		.addField('Platform', capitalize(song.platform), true)
+		.addField(lang.embeds.streams, song.streams.toString(), true)
+		.addField(lang.embeds.likes, song.likes.toString(), true)
+		.addField(lang.embeds.length, secondsToReadable(song.length), true)
+		.addField(lang.embeds.artists, song.artists.join(', '), true)
+		.addField(lang.embeds.platform, capitalize(song.platform), true)
 		.setThumbnail(song.artwork);
 
 const createPlaylistEmbed = (playlist: Playlist) =>
 	new DefaultEmbed()
-		.addField('Length', secondsToReadable(playlist.total_length), true)
-		.addField('Song count', playlist.songs.length.toString(), true)
-		.addField('Created by', playlist.user.name, true)
-		.addField('Platform', capitalize(playlist.platform), true)
+		.addField(lang.embeds.length, secondsToReadable(playlist.total_length), true)
+		.addField(lang.embeds.songCount, playlist.songs.length.toString(), true)
+		.addField(lang.embeds.createdBy, playlist.user.name, true)
+		.addField(lang.embeds.platform, capitalize(playlist.platform), true)
 		.setThumbnail(playlist.artwork);

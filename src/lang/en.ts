@@ -49,6 +49,13 @@ const en: Language = {
 			failed: 'Failed to stop the music',
 		},
 		notPlaying: 'There is nothing playing.',
+		searching: (keywords) => `Searching for \`${keywords}\``,
+		playlistNoSongs: 'Playlist does not contain any songs',
+		forgotKeywords: 'Please provide a url or some keywords to search for',
+		queue: {
+			added: (name) => `Added \`${name}\` to the queue`,
+			nowPlaying: (name) => `Now playing \`${name}\``,
+		},
 	},
 	bot: {
 		startup: (userTag) => `Started up client ${userTag}`,
@@ -75,6 +82,20 @@ const en: Language = {
 	redis: {
 		connected: 'Connected with Redis db',
 		failed: 'Failed to connect to Redis db:',
+	},
+	buttons: {
+		previous: 'Previous',
+		playpause: 'Play/Pause',
+		next: 'Next',
+	},
+	embeds: {
+		streams: 'Streams',
+		likes: 'Likes',
+		length: 'Length',
+		artists: 'Artists',
+		platform: 'Platform',
+		songCount: 'Song Count',
+		createdBy: 'Created By',
 	},
 };
 

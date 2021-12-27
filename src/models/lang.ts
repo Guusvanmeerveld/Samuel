@@ -44,6 +44,13 @@ export default interface Language {
 			failed: string;
 		};
 		notPlaying: string;
+		searching: (keywords: string) => string;
+		playlistNoSongs: string;
+		forgotKeywords: string;
+		queue: {
+			added: (name: string) => string;
+			nowPlaying: (name: string) => string;
+		};
 	};
 	bot: {
 		startup: (tag: string) => string;
@@ -73,5 +80,19 @@ export default interface Language {
 	redis: {
 		connected: string;
 		failed: string;
+	};
+	buttons: {
+		previous: string;
+		playpause: string;
+		next: string;
+	};
+	embeds: {
+		streams: string;
+		likes: string;
+		length: string;
+		artists: string;
+		platform: string;
+		songCount: string;
+		createdBy: string;
 	};
 }
