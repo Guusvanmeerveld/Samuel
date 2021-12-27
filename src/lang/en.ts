@@ -76,7 +76,7 @@ const en: Language = {
 			notFound: 'Could not find SOUNDCLOUD_TOKEN variable, stopping',
 			status: 'Validating SoundCloud token...',
 			success: 'SoundCloud token check succeeded',
-			error: 'Could not validate Soundcloud token, stopping',
+			error: 'Could not validate SoundCloud token, stopping',
 		},
 	},
 	redis: {
