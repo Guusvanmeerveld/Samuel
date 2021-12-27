@@ -74,7 +74,6 @@ const config: ApplicationCommand[] = [
 		name: 'resume',
 		description: 'Resume the music.',
 	},
-
 	{
 		name: 'skip',
 		description: 'Skip through the queue.',

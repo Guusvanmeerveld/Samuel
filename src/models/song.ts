@@ -4,6 +4,8 @@ interface Song extends Playable {
 	url: string;
 	artwork: string;
 	streamURL: () => Promise<string>;
+	streams: number;
+	likes: number;
 	name: string;
 	platform: Platform;
 	artists: string[];

@@ -130,6 +130,6 @@ export default class VoiceManager {
 	private defaultOnIdle = (connection: VoiceConnection, guildID: string) => {
 		const player = new Player(guildID);
 
-		player.move('forward');
+		if (this.isConnected()) player.move('forward');
 	};
 }

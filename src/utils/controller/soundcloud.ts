@@ -123,6 +123,8 @@ const trackToSong = (track: Track): Song => {
 		name: track.title,
 		platform: 'soundcloud',
 		released: new Date(track.release_date ?? track.display_date),
+		streams: track.playback_count,
+		likes: track.likes_count,
 		streamURL,
 		url: track.permalink_url,
 	};

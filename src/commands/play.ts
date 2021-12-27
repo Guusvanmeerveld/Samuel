@@ -1,7 +1,7 @@
 import { GuildMember, MessageActionRow, MessageButton } from 'discord.js';
 
 import Command from '@models/command';
-import BotError, { ErrorType } from '@models/errors';
+import BotError from '@models/errors';
 import { Playable } from '@models/player';
 import Playlist from '@models/playlist';
 import Song from '@models/song';
@@ -130,6 +130,8 @@ const createActionRow = () =>
 
 const createSongEmbed = (song: Song) =>
 	new DefaultEmbed()
+		.addField('Streams', song.streams.toString(), true)
+		.addField('Likes', song.likes.toString(), true)
 		.addField('Length', secondsToReadable(song.length), true)
 		.addField('Artists', song.artists.join(', '), true)
 		.addField('Platform', capitalize(song.platform), true)
