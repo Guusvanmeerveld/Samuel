@@ -2,12 +2,17 @@
 > Tempo is a simple, yet feature rich Discord music bot
 
 ## Index
-- Description
-- Features
-- Commands
-- Configuration
-- Building
-- Development
+- [Tempo](#tempo)
+  - [Index](#index)
+  - [Description](#description)
+  - [Features](#features)
+  - [Commands](#commands)
+  - [Configuration](#configuration)
+  - [Building](#building)
+    - [Requirements:](#requirements)
+    - [Local](#local)
+    - [Docker](#docker)
+  - [Development](#development)
 
 ## Description
 
