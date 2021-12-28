@@ -61,7 +61,7 @@ export default interface Language {
 	/**
 	 * English only
 	 */
-	language: {
+	language?: {
 		notFound: (language: string) => string;
 	};
 	checks: {

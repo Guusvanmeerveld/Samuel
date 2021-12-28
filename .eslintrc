@@ -16,7 +16,6 @@
 		"prettier/prettier": "error",
 		"linebreak-style": ["error", "unix"],
 		"no-case-declarations": 0,
-		"quotes": ["error", "single"],
 		"@typescript-eslint/no-non-null-assertion": 0
 		// "semi": ["error", "always"]
 	}

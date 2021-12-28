@@ -19,7 +19,7 @@ const nl: Language = {
 			},
 			list: {
 				page: (page) => `\`${page}\` is geen bestaand pagina nummer.`,
-				title: 'Lijst van alle commando\'s',
+				title: "Lijst van alle commando's",
 				footer: (page, total) => `Pagina ${page}/${total}`,
 				name: (name) => `Naam: \`${name}\``,
 				description: (description) => `Omschrijving: \`${description}\``,
@@ -62,9 +62,6 @@ const nl: Language = {
 		activity: {
 			name: '/help',
 		},
-	},
-	language: {
-		notFound: (language) => `Taal ${language} kon niet worden gevonden, afsluiten...`,
 	},
 	checks: {
 		network: {
