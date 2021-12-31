@@ -89,13 +89,16 @@ const en: Language = {
 		next: 'Next',
 	},
 	embeds: {
-		streams: 'Streams',
-		likes: 'Likes',
-		length: 'Length',
-		artists: 'Artists',
-		platform: 'Platform',
-		songCount: 'Song Count',
-		createdBy: 'Created By',
+		play: {
+			streams: 'Streams',
+			likes: 'Likes',
+			length: 'Length',
+			artists: 'Artists',
+			platform: 'Platform',
+			songCount: 'Song Count',
+			createdBy: 'Created By',
+		},
+		search: { title: (keywords) => `Showing results for \`${keywords}\`` },
 	},
 };
 

@@ -87,12 +87,17 @@ export default interface Language {
 		next: string;
 	};
 	embeds: {
-		streams: string;
-		likes: string;
-		length: string;
-		artists: string;
-		platform: string;
-		songCount: string;
-		createdBy: string;
+		play: {
+			streams: string;
+			likes: string;
+			length: string;
+			artists: string;
+			platform: string;
+			songCount: string;
+			createdBy: string;
+		};
+		search: {
+			title: (keywords: string) => string;
+		};
 	};
 }

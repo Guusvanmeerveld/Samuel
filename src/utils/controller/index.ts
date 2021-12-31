@@ -25,7 +25,13 @@ export const search = async (
 
 	if (!searcher) throw new BotError(lang.song.notFound);
 
-	return await searcher(keywords, limit);
+	const result = await searcher(keywords, limit);
+
+	if (result.length == 0) {
+		throw new BotError(lang.song.notFound);
+	}
+
+	return result;
 };
 
 export const info = async (url: string): Promise<Song | Playlist> => {

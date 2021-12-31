@@ -5,6 +5,7 @@ import { pause } from './pause';
 import { ping } from './ping';
 import { play } from './play';
 import { resume } from './resume';
+import { search } from './search';
 import { stop } from './stop';
 
 import Command from '@models/command';
@@ -19,5 +20,6 @@ Commands.set('stop', stop);
 Commands.set('ping', ping);
 Commands.set('resume', resume);
 Commands.set('pause', pause);
+Commands.set('search', search);
 
 export default Commands;
