@@ -136,8 +136,8 @@ const createActionRow = () =>
 
 const createSongEmbed = (song: Song) =>
 	new DefaultEmbed()
-		.addField(lang.embeds.play.streams, song.streams.toString(), true)
-		.addField(lang.embeds.play.likes, song.likes.toString(), true)
+		.addField(lang.embeds.play.streams, song.streams?.toString() ?? 'Unknown', true)
+		.addField(lang.embeds.play.likes, song.likes?.toString() ?? 'Unknown', true)
 		.addField(lang.embeds.play.length, secondsToReadable(song.length), true)
 		.addField(lang.embeds.play.artists, song.artists.join(', '), true)
 		.addField(lang.embeds.play.platform, capitalize(song.platform), true)

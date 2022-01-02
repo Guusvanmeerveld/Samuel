@@ -24,7 +24,7 @@ export const BOT_COLOR: ColorResolvable = (process.env.BOT_COLOR as ColorResolva
 
 /**
  * @optional
- * @description The cache location when making use of local JSON database.
+ * @description The cache directory.
  */
 export const CACHE_LOCATION = process.env.CACHE_LOCATION ?? join(process.cwd(), '.cache');
 
@@ -63,3 +63,16 @@ export const PING_ADDRESS = process.env.PING_ADDRESS ?? 'ping.archlinux.org';
  * @optional
  */
 export const LANGUAGE = process.env.LANGUAGE ?? 'en';
+
+/**
+ * @optional
+ */
+export const MAX_AUDIO_FILE_SIZE =
+	parseInt(process.env.MAX_AUDIO_FILE_SIZE!) ?? 1024 * 1024 * 1024 * 100; // Default is 100MB
+
+/**
+ * @optional
+ */
+export const PLACEHOLDER_IMG =
+	process.env.PLACEHOLDER_IMG ??
+	'https://raw.githubusercontent.com/Guusvanmeerveld/Tempo/master/img/placeholder.jpg';

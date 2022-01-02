@@ -25,6 +25,7 @@ export default interface Language {
 	};
 	song: {
 		notFound: string;
+		errorFetchingFile: string;
 	};
 	voice: {
 		memberNotConnected: string;

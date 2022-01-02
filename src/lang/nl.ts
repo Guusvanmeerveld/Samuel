@@ -29,6 +29,7 @@ const nl: Language = {
 	},
 	song: {
 		notFound: 'Nummer niet gevonden.',
+		errorFetchingFile: 'Er is een fout opgetreden tijdens het ophalen van het bestand',
 	},
 	voice: {
 		memberNotConnected: 'Je bent niet verbonden met een spraak kanaal.',

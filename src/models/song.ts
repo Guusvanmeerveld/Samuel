@@ -4,8 +4,8 @@ interface Song extends Playable {
 	url: string;
 	artwork: string;
 	streamURL: () => Promise<string>;
-	streams: number;
-	likes: number;
+	streams?: number;
+	likes?: number;
 	name: string;
 	platform: Platform;
 	artists: string[];
@@ -13,6 +13,6 @@ interface Song extends Playable {
 	length: number;
 }
 
-export type Platform = 'soundcloud' | 'spotify';
+export type Platform = 'soundcloud' | 'spotify' | 'file';
 
 export default Song;

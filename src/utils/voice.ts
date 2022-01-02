@@ -103,12 +103,16 @@ export default class VoiceManager {
 			throw new BotError(lang.voice.notConnected);
 		}
 
-		let stream: AudioStream | undefined;
+		let stream: AudioStream | string | undefined;
 
 		switch (song.platform) {
 			case 'soundcloud':
 				stream = m3u8stream(await song.streamURL());
 
+				break;
+
+			case 'file':
+				stream = await song.streamURL();
 				break;
 		}
 

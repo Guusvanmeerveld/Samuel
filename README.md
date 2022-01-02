@@ -81,7 +81,7 @@ Even though Tempo is a simple bot, it does have a lot of customizable features. 
   - 'DARK_BUT_NOT_BLACK'
   - 'NOT_QUITE_BLACK'
   - 'RANDOM'
-- `CACHE_LOCATION`: Not required, specifies the location of the cache <ins>directory</ins> when using json caching, which can be useful in a Docker environment. Default: `{APP_DIR}/.cache`
+- `CACHE_LOCATION`: Not required, specifies the location of the cache <ins>directory</ins>, which can be useful in a Docker environment. Default: `{APP_DIR}/.cache`
 - `CACHE_TIMEOUT`: Not required, specifies the amount of time request data will be cached for in <ins>milliseconds</ins>. Default: `50000`
 - `REDIS_URL`: Not required, specifies the url to connect with the Redis database.
 - `REDIS_PASSWORD`: Not required, used in combination with `REDIS_URL` to specify the password for the user.

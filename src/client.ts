@@ -1,8 +1,12 @@
+import fs from 'fs-extra';
+import { join } from 'path';
+
 import { Client, Intents } from 'discord.js';
 
 import Cache from '@utils/cache';
 import * as Logger from '@utils/logger';
 
+import { CACHE_LOCATION } from '@src/config';
 import lang from '@src/lang';
 import updateCommands from '@src/updater';
 
@@ -22,6 +26,8 @@ client.on('ready', async () => {
 	client.user.setActivity({ name: lang.bot.activity.name, type: 'LISTENING' });
 
 	await Cache.init();
+
+	await fs.ensureDir(join(CACHE_LOCATION, 'songs'));
 
 	await updateCommands(client.application);
 });

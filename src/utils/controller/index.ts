@@ -1,3 +1,4 @@
+import * as file from './file';
 import * as soundcloud from './soundcloud';
 
 import BotError from '@models/errors';
@@ -6,6 +7,7 @@ import Playlist from '@models/playlist';
 import Song from '@models/song';
 
 import {
+	AUDIO_FILE_EXTENSIONS,
 	SEARCH_RESULT_LIMIT,
 	SOUNDCLOUD_REGEX,
 	SOUNDCLOUD_SETS_REGEX,
@@ -43,6 +45,12 @@ export const info = async (url: string): Promise<Song | Playlist> => {
 
 	if (url.match(SOUNDCLOUD_SETS_REGEX)) {
 		getter = soundcloud.playlist;
+	}
+
+	const extension = url.split('.').pop();
+
+	if (extension && AUDIO_FILE_EXTENSIONS.includes(extension.toLowerCase())) {
+		getter = file.metadata;
 	}
 
 	if (!getter) throw new BotError(lang.song.notFound);
