@@ -12,24 +12,38 @@ import lang from '@src/lang';
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;
 
 const updater = async (application: ClientApplication): Promise<void> => {
-	const lastUpdated = (await Cache.get('commandsUpdated')) as number | null;
+	const expires = (await Cache.get('commandsUpdated')) as number | null;
 
-	if (!lastUpdated || (lastUpdated && lastUpdated + CACHE_TIMEOUT < Date.now())) {
+	if (!expires || (expires && expires < Date.now())) {
 		await axios
 			.put(`${DISCORD_ENDPOINT}/applications/${application.id}/commands`, commands, {
 				headers: { Authorization: `Bot ${BOT_TOKEN}` },
 			})
 			.then(async (res) => {
-				await Cache.set('commandsUpdated', Date.now());
+				await Cache.set('commandsUpdated', Date.now() + CACHE_TIMEOUT);
 
 				Logger.log(lang.commands.updater.updated(commands.length));
 
 				return res;
 			})
-			.catch((error: AxiosError) => {
+			.catch(async ({ response }: AxiosError) => {
+				if (response?.status == 429 && response.data.retry_after) {
+					const retryIn = response.data.retry_after * 1000 + 1000;
+
+					Logger.warn(
+						`Ratelimited by Discord while trying to update commands! Retrying in ${retryIn / 1000}s`
+					);
+
+					await Cache.set('commandsUpdated', Date.now() + retryIn);
+
+					setTimeout(async () => await updater(application), retryIn);
+
+					return;
+				}
+
 				Logger.warn(lang.commands.updater.error);
 
-				console.error(error.response?.data.errors);
+				console.error(response?.data);
 			});
 	}
 };
