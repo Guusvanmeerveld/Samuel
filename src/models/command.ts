@@ -4,10 +4,17 @@ type Command = (interaction: CommandInteraction) => Promise<void>;
 
 export default Command;
 
+export enum ApplicationCommandType {
+	CHAT_INPUT = 1,
+	USER = 2,
+	MESSAGE = 3,
+}
+
 export interface ApplicationCommand {
 	name: string;
-	description: string;
+	description?: string;
 	options?: Option[];
+	type?: ApplicationCommandType;
 }
 
 export interface Option {

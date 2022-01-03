@@ -1,4 +1,10 @@
-import { GuildMember, MessageActionRow, MessageButton } from 'discord.js';
+import {
+	CommandInteraction,
+	ContextMenuInteraction,
+	GuildMember,
+	MessageActionRow,
+	MessageButton,
+} from 'discord.js';
 
 import Command from '@models/command';
 import BotError from '@models/errors';
@@ -12,17 +18,26 @@ import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
 import lang from '@src/lang';
-import { capitalize, secondsToReadable } from '@src/utils';
+import { abbreviateNumber, capitalize, secondsToReadable } from '@src/utils';
 
 export const play: Command = async (interaction) => {
-	const url = interaction.options.get('url')?.value;
-	const keywords = interaction.options.get('keywords')?.value as string;
+	const url = interaction.options.get('url')?.value as string | undefined;
+	const keywords = interaction.options.get('keywords')?.value as string | undefined;
 
 	if (!(url || keywords)) {
 		interaction.reply(lang.player.forgotKeywords);
 		return;
 	}
 
+	await interaction.deferReply();
+
+	execute(interaction, { url, keywords });
+};
+
+export const execute = async (
+	interaction: CommandInteraction | ContextMenuInteraction,
+	{ url, keywords }: { url?: string; keywords?: string }
+): Promise<void> => {
 	const member = interaction.member as GuildMember;
 
 	if (!member.voice.channelId) {
@@ -31,8 +46,6 @@ export const play: Command = async (interaction) => {
 	}
 
 	const guildID = interaction.guildId!;
-
-	await interaction.deferReply();
 
 	const voice = new VoiceManager(guildID);
 
@@ -51,14 +64,6 @@ export const play: Command = async (interaction) => {
 
 	let playable: Playable | void;
 
-	if (url) {
-		playable = await Controller.info(url as string).catch(async (error: BotError) => {
-			await interaction.followUp(error.message);
-
-			return;
-		});
-	}
-
 	if (keywords) {
 		const platform = interaction.options.get('platform')?.value;
 
@@ -67,6 +72,14 @@ export const play: Command = async (interaction) => {
 		const songs = await Controller.search(keywords.split(' '), 1, platform as string);
 
 		playable = songs[0];
+	}
+
+	if (url) {
+		playable = await Controller.info(url as string).catch(async (error: BotError) => {
+			await interaction.followUp(error.message);
+
+			return;
+		});
 	}
 
 	if (!playable) return;
@@ -136,8 +149,8 @@ const createActionRow = () =>
 
 const createSongEmbed = (song: Song) =>
 	new DefaultEmbed()
-		.addField(lang.embeds.play.streams, song.streams?.toString() ?? 'Unknown', true)
-		.addField(lang.embeds.play.likes, song.likes?.toString() ?? 'Unknown', true)
+		.addField(lang.embeds.play.streams, abbreviateNumber(song.streams ?? 0), true)
+		.addField(lang.embeds.play.likes, abbreviateNumber(song.likes ?? 0), true)
 		.addField(lang.embeds.play.length, secondsToReadable(song.length), true)
 		.addField(lang.embeds.play.artists, song.artists.join(', '), true)
 		.addField(lang.embeds.play.platform, capitalize(song.platform), true)

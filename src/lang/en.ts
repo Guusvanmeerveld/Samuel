@@ -30,6 +30,7 @@ const en: Language = {
 	song: {
 		notFound: 'Could not find song.',
 		errorFetchingFile: 'An error occured while fetching your file',
+		noAttatchments: 'Message does not have any attatchments',
 	},
 	voice: {
 		memberNotConnected: 'You are not connected to a voice channel.',

@@ -29,7 +29,8 @@ const nl: Language = {
 	},
 	song: {
 		notFound: 'Nummer niet gevonden.',
-		errorFetchingFile: 'Er is een fout opgetreden tijdens het ophalen van het bestand',
+		errorFetchingFile: 'Er is een fout opgetreden tijdens het ophalen van het bestand.',
+		noAttatchments: 'Het bericht heeft geen toegevoegde bestanden.',
 	},
 	voice: {
 		memberNotConnected: 'Je bent niet verbonden met een spraak kanaal.',
@@ -87,13 +88,18 @@ const nl: Language = {
 		next: 'Volgende',
 	},
 	embeds: {
-		streams: 'Streams',
-		likes: 'Likes',
-		length: 'Lengte',
-		artists: 'Artiesten',
-		platform: 'Platform',
-		songCount: 'Nummer hoeveelheid',
-		createdBy: 'Gemaakt door',
+		play: {
+			streams: 'Streams',
+			likes: 'Likes',
+			length: 'Lengte',
+			artists: 'Artiesten',
+			platform: 'Platform',
+			songCount: 'Nummer hoeveelheid',
+			createdBy: 'Gemaakt door',
+		},
+		search: {
+			title: (keywords) => `Resultaten voor \`${keywords}\``,
+		},
 	},
 };
 

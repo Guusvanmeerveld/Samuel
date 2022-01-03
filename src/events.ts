@@ -4,6 +4,7 @@ import handleButtons from '@src/buttons';
 import client from '@src/client';
 import Commands from '@src/commands';
 import lang from '@src/lang';
+import handleContextMenu from '@src/menu';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
 	if (interaction.isCommand()) {
@@ -28,5 +29,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 	if (interaction.isButton()) {
 		await handleButtons(interaction);
+	}
+
+	if (interaction.isContextMenu()) {
+		await handleContextMenu(interaction);
 	}
 });

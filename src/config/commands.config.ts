@@ -1,4 +1,4 @@
-import { ApplicationCommand, Option, OptionType } from '@models/command';
+import { ApplicationCommand, ApplicationCommandType, Option, OptionType } from '@models/command';
 
 const platformOption = {
 	name: 'platform',
@@ -115,6 +115,10 @@ const config: ApplicationCommand[] = [
 				type: OptionType.INTEGER,
 			},
 		],
+	},
+	{
+		name: 'Play file',
+		type: ApplicationCommandType.MESSAGE,
 	},
 ];
 
