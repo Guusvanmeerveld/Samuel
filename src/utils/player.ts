@@ -3,7 +3,7 @@ import { NoSubscriberBehavior, createAudioPlayer } from '@discordjs/voice';
 
 import BotError from '@models/errors';
 import PlayerModel from '@models/player';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
 import VoiceManager from '@utils/voice';
 
@@ -77,7 +77,7 @@ export default class Player {
 	 * Adds a song to the queue.
 	 * @param song The song to add
 	 */
-	add = (song: Song): void => {
+	add = (song: UnresolvedSong): void => {
 		const player = this.get();
 
 		player?.toPlay.push(song);
@@ -130,7 +130,7 @@ export default class Player {
 	 */
 	move = (
 		direction: 'forward' | 'back'
-	): [old: string | undefined, current: string | undefined] => {
+	): [previous: string | undefined, current: string | undefined] => {
 		const voice = new VoiceManager(this.guildID);
 
 		if (!voice.isConnected()) {
@@ -139,7 +139,7 @@ export default class Player {
 
 		const player = this.get();
 
-		let newPlaying: Song | undefined;
+		let newPlaying: UnresolvedSong | undefined;
 
 		if (direction == 'forward') newPlaying = player?.toPlay.shift();
 		if (direction == 'back') newPlaying = player?.hasPlayed.pop();
@@ -156,12 +156,12 @@ export default class Player {
 		if (!player.playing) {
 			voice.disconnect();
 
-			return [old?.name, undefined];
+			return [old?.url, undefined];
 		}
 
 		voice.play(player.playing);
 
-		return [old?.name, player.playing.name];
+		return [old?.url, player.playing.url];
 	};
 
 	/**

@@ -6,22 +6,30 @@ import axios from 'axios';
 
 import BotError from '@models/errors';
 import { getter } from '@models/platform';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
 import { hash } from '@utils/cache';
 
 import { CACHE_LOCATION, MAX_AUDIO_FILE_SIZE, PLACEHOLDER_IMG } from '@src/config';
 import lang from '@src/lang';
 
-export const metadata: getter = async (url): Promise<Song> => {
+const playable = { isPlaylist: () => false, isSong: () => true };
+
+export const metadata: getter = async (url): Promise<UnresolvedSong> => {
 	const hashed = hash(url);
-	const path = join(CACHE_LOCATION, 'songs', hashed);
+	const dir = join(CACHE_LOCATION, 'songs');
+	const path = join(dir, hashed);
+
+	await fs.ensureDir(dir);
 
 	if (!(await fs.pathExists(path))) {
 		const writer = fs.createWriteStream(path);
 
 		const response = await axios({
 			url,
+			headers: {
+				'User-Agent': 'Tempo-Bot',
+			},
 			method: 'GET',
 			responseType: 'stream',
 			maxBodyLength: MAX_AUDIO_FILE_SIZE,
@@ -41,23 +49,30 @@ export const metadata: getter = async (url): Promise<Song> => {
 		});
 	}
 
-	const data = await mm.parseFile(path);
+	const data = await mm.parseFile(path, { duration: true });
 
 	const names = data.format.trackInfo
 		.map((item) => item.name)
 		.filter((item) => item != undefined && item != '');
 
-	const song: Song = {
-		length: data.format.duration ?? 0,
-		artwork: PLACEHOLDER_IMG,
-		isPlaylist: () => false,
-		isSong: () => true,
-		name: names[0] ?? url,
-		platform: 'file',
-		url,
-		streamURL: async () => path,
-		artists: ['Unknown'],
-		released: data.format.creationTime ?? new Date(),
+	const name = names[0] ?? url;
+	const platform = 'file';
+
+	const song: UnresolvedSong = {
+		resolve: async () => ({
+			...playable,
+			length: data.format.duration ?? 0,
+			artwork: PLACEHOLDER_IMG,
+			name,
+			url,
+			platform,
+			streamURL: path,
+			artists: ['Unknown'],
+			released: data.format.creationTime ?? new Date(),
+		}),
+		...playable,
+		platform,
+		identifier: url,
 	};
 
 	return song;

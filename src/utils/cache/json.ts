@@ -2,43 +2,47 @@ import { hash } from '.';
 import { ensureFile, readFile, readJSON, writeJSON } from 'fs-extra';
 import { join } from 'path';
 
-import { deleter, getter, setter } from '@models/cache';
+import { getter, setter, unsetter } from '@models/cache';
 
 import { CACHE_LOCATION } from '@src/config';
 
-const CACHE_FILE = join(CACHE_LOCATION, 'cache.json');
+export default class DB<T> {
+	private data: Record<string, T> = {};
+	private cacheFile;
 
-export const init = async (): Promise<void> => {
-	await ensureFile(CACHE_FILE);
-
-	const isNotEmpty = await readFile(CACHE_FILE);
-
-	if (!isNotEmpty.toString()) {
-		await writeJSON(CACHE_FILE, {});
+	constructor(name: string) {
+		this.cacheFile = join(CACHE_LOCATION, name, 'cache.json');
 	}
-};
 
-export const get: getter = async <T>(key: string) => {
-	const data: Record<string, T> = await readJSON(CACHE_FILE);
+	public init = async (): Promise<void> => {
+		await ensureFile(this.cacheFile);
 
-	return data[hash(key)];
-};
+		const isNotEmpty = await readFile(this.cacheFile);
 
-export const set: setter = async (key, value) => {
-	const data: Record<string, unknown> = await readJSON(CACHE_FILE);
+		if (!isNotEmpty.toString()) {
+			await writeJSON(this.cacheFile, {});
+		}
 
-	const updated = {
-		...data,
-		[hash(key)]: value,
+		this.data = await readJSON(this.cacheFile);
 	};
 
-	await writeJSON(CACHE_FILE, updated);
-};
+	public initialized = (): boolean => Object.keys(this.data).length != 0;
 
-export const unset: deleter = async (key) => {
-	const data: Record<string, unknown> = await readJSON(CACHE_FILE);
+	public get: getter<T> = async (key) => {
+		return this.data[hash(key)];
+	};
 
-	delete data[hash(key)];
+	public set: setter<T> = async (key, value) => {
+		this.data[hash(key)] = value;
 
-	await writeJSON(CACHE_FILE, data);
-};
+		await writeJSON(this.cacheFile, this.data);
+	};
+
+	public unset: unsetter = async (key) => {
+		const data: Record<string, unknown> = await readJSON(this.cacheFile);
+
+		delete data[hash(key)];
+
+		await writeJSON(this.cacheFile, data);
+	};
+}

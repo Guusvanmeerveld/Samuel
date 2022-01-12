@@ -2,7 +2,7 @@ import { hash } from '.';
 
 import Redis from 'ioredis';
 
-import { getter, setter, deleter } from '@models/cache';
+import { getter, setter, unsetter } from '@models/cache';
 
 import * as Logger from '@utils/logger';
 
@@ -11,35 +11,42 @@ import lang from '@src/lang';
 
 let client: Redis.Redis;
 
-export const init = (): void => {
-	client = new Redis(REDIS_URL, {
-		password: REDIS_PASSWORD,
-		username: REDIS_USER,
-	});
+export default class DB<T> {
+	private connected = false;
 
-	client.on('connect', () => {
-		Logger.log(lang.redis.connected);
-	});
+	init = async (): Promise<void> => {
+		client = new Redis(REDIS_URL, {
+			password: REDIS_PASSWORD,
+			username: REDIS_USER,
+		});
 
-	client.on('error', (error) => {
-		Logger.error(lang.redis.failed);
+		client.on('connect', () => {
+			Logger.log(lang.redis.connected);
+			this.connected = true;
+		});
 
-		Logger.error(error);
-	});
-};
+		client.on('error', (error) => {
+			Logger.error(lang.redis.failed);
 
-export const get: getter = async (key) => {
-	const data = await client.get(hash(key));
+			Logger.error(error);
+		});
+	};
 
-	if (!data) return;
+	public initialized = (): boolean => Object.keys(this.connected).length != 0;
 
-	return JSON.parse(data);
-};
+	get: getter<T> = async (key) => {
+		const data = await client.get(hash(key));
 
-export const set: setter = async (key, value) => {
-	await client.set(hash(key), JSON.stringify(value));
-};
+		if (!data) return;
 
-export const unset: deleter = async (key) => {
-	await client.set(hash(key), '');
-};
+		return JSON.parse(data);
+	};
+
+	set: setter<T> = async (key, value) => {
+		await client.set(hash(key), JSON.stringify(value));
+	};
+
+	unset: unsetter = async (key) => {
+		await client.set(hash(key), '');
+	};
+}

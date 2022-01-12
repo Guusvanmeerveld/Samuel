@@ -11,7 +11,7 @@ import {
 } from '@discordjs/voice';
 
 import BotError from '@models/errors';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
 import * as Logger from '@utils/logger';
 import Player from '@utils/player';
@@ -98,21 +98,23 @@ export default class VoiceManager {
 		return controller.stop();
 	};
 
-	public play = async (song: Song, onIdle = this.defaultOnIdle): Promise<void> => {
+	public play = async (unresolved: UnresolvedSong, onIdle = this.defaultOnIdle): Promise<void> => {
 		if (!this.connection) {
 			throw new BotError(lang.voice.notConnected);
 		}
 
 		let stream: AudioStream | string | undefined;
 
+		const song = await unresolved.resolve();
+
 		switch (song.platform) {
 			case 'soundcloud':
-				stream = m3u8stream(await song.streamURL());
+				stream = m3u8stream(await song.streamURL);
 
 				break;
 
 			case 'file':
-				stream = await song.streamURL();
+				stream = await song.streamURL;
 				break;
 		}
 

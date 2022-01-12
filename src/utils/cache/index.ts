@@ -1,5 +1,5 @@
-import * as JSONCache from './json';
-import * as RedisCache from './redis';
+import JSONCache from './json';
+import RedisCache from './redis';
 import { createHash } from 'crypto';
 
 import { REDIS_URL } from '@src/config';

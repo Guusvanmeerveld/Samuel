@@ -3,7 +3,7 @@ import { Playable } from '@models/player';
 interface Song extends Playable {
 	url: string;
 	artwork: string;
-	streamURL: () => Promise<string>;
+	streamURL: string;
 	streams?: number;
 	likes?: number;
 	name: string;
@@ -11,6 +11,12 @@ interface Song extends Playable {
 	artists: string[];
 	released: Date;
 	length: number;
+}
+
+export interface UnresolvedSong extends Playable {
+	resolve: () => Promise<Song>;
+	identifier: string;
+	platform: Platform;
 }
 
 export type Platform = 'soundcloud' | 'spotify' | 'file';

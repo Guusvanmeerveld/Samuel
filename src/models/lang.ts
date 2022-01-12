@@ -52,6 +52,7 @@ export default interface Language {
 		queue: {
 			added: (name: string) => string;
 			nowPlaying: (name: string) => string;
+			full: string;
 		};
 	};
 	bot: {

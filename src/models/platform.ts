@@ -1,6 +1,6 @@
 import Playlist from '@models/playlist';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
-export type searcher = (keywords: string[], limit: number) => Promise<Song[]>;
+export type searcher = (keywords: string[], limit: number) => Promise<UnresolvedSong[] | void>;
 
-export type getter = (url: string) => Promise<Song | Playlist>;
+export type getter = (url: string) => Promise<UnresolvedSong | Playlist>;

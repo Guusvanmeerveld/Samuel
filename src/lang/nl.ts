@@ -57,6 +57,7 @@ const nl: Language = {
 		queue: {
 			added: (name) => `\`${name}\` toegevoegd aan wachtrij`,
 			nowPlaying: (name) => `\`${name}\` speelt nu af`,
+			full: 'De wachtrij zit vol om nog meer nummers toe te voegen.',
 		},
 	},
 	bot: {

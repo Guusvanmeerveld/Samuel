@@ -68,7 +68,7 @@ export const LANGUAGE = process.env.LANGUAGE ?? 'en';
  * @optional
  */
 export const MAX_AUDIO_FILE_SIZE =
-	parseInt(process.env.MAX_AUDIO_FILE_SIZE!) ?? 1024 * 1024 * 1024 * 100; // Default is 100MB
+	parseInt(process.env.MAX_AUDIO_FILE_SIZE!) || 1024 * 1024 * 1024 * 100; // Default is 100MB
 
 /**
  * @optional
@@ -76,3 +76,18 @@ export const MAX_AUDIO_FILE_SIZE =
 export const PLACEHOLDER_IMG =
 	process.env.PLACEHOLDER_IMG ??
 	'https://raw.githubusercontent.com/Guusvanmeerveld/Tempo/master/img/placeholder.jpg';
+
+/**
+ * @optional
+ */
+export const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+
+/**
+ * @optional
+ */
+export const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+
+/**
+ * @optional
+ */
+export const MAX_QUEUE_LENGTH = parseInt(process.env.MAX_QUEUE_LENGTH!) || 50;

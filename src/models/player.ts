@@ -1,21 +1,21 @@
 import { AudioPlayer } from '@discordjs/voice';
 
 import Playlist from '@models/playlist';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
 interface Player {
 	controller: AudioPlayer;
-	toPlay: Song[];
-	hasPlayed: Song[];
+	toPlay: UnresolvedSong[];
+	hasPlayed: UnresolvedSong[];
 	paused: boolean;
-	playing?: Song;
+	playing?: UnresolvedSong;
 	loop: boolean;
 	volume: number;
 }
 
 export interface Playable {
 	isPlaylist: () => this is Playlist;
-	isSong: () => this is Song;
+	isSong: () => this is UnresolvedSong;
 }
 
 export default Player;

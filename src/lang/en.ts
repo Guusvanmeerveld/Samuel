@@ -55,8 +55,9 @@ const en: Language = {
 		playlistNoSongs: 'Playlist does not contain any songs',
 		forgotKeywords: 'Please provide a url or some keywords to search for',
 		queue: {
-			added: (name) => `Added \`${name}\` to the queue`,
-			nowPlaying: (name) => `Now playing \`${name}\``,
+			added: (name) => `Added ${name} to the queue`,
+			nowPlaying: (name) => `Now playing: ${name}`,
+			full: 'The queue is too full to add any more songs.',
 		},
 	},
 	bot: {

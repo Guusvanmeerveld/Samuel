@@ -4,7 +4,7 @@ import * as soundcloud from './soundcloud';
 import BotError from '@models/errors';
 import { getter, searcher } from '@models/platform';
 import Playlist from '@models/playlist';
-import Song from '@models/song';
+import { UnresolvedSong } from '@models/song';
 
 import {
 	AUDIO_FILE_EXTENSIONS,
@@ -18,7 +18,7 @@ export const search = async (
 	keywords: string[],
 	limit = SEARCH_RESULT_LIMIT,
 	platform = 'soundcloud'
-): Promise<Song[]> => {
+): Promise<UnresolvedSong[] | void> => {
 	let searcher: searcher | undefined;
 
 	if (platform == 'soundcloud') {
@@ -29,17 +29,23 @@ export const search = async (
 
 	const result = await searcher(keywords, limit);
 
-	if (result.length == 0) {
+	if (result?.length == 0) {
 		throw new BotError(lang.song.notFound);
 	}
 
 	return result;
 };
 
-export const info = async (url: string): Promise<Song | Playlist> => {
+export const info = async (url: string): Promise<UnresolvedSong | Playlist> => {
 	let getter: getter | undefined;
 
 	if (url.match(SOUNDCLOUD_REGEX)) {
+		const parsed = new URL(url);
+
+		parsed.search = '';
+
+		url = parsed.href;
+
 		getter = soundcloud.track;
 	}
 

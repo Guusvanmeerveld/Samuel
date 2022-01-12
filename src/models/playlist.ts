@@ -1,8 +1,8 @@
 import { Playable } from '@models/player';
-import Song, { Platform } from '@models/song';
+import { Platform, UnresolvedSong } from '@models/song';
 
 export default interface Playlist extends Playable {
-	songs: Song[];
+	songs: UnresolvedSong[];
 	url: string;
 	artwork: string;
 	name: string;

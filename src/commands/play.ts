@@ -17,6 +17,7 @@ import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
+import { MAX_QUEUE_LENGTH } from '@src/config';
 import lang from '@src/lang';
 import { abbreviateNumber, capitalize, secondsToReadable } from '@src/utils';
 
@@ -52,9 +53,7 @@ export const execute = async (
 	const connected = await voice
 		.join(member.voice.channelId)
 		.catch(async (e: BotError) => {
-			if (typeof e.message == 'string') {
-				await interaction.followUp(e.message);
-			}
+			await interaction.followUp(e.message);
 
 			return false;
 		})
@@ -69,7 +68,15 @@ export const execute = async (
 
 		interaction.followUp(lang.player.searching(keywords));
 
-		const songs = await Controller.search(keywords.split(' '), 1, platform as string);
+		const songs = await Controller.search(keywords.split(' '), 1, platform as string).catch(
+			async (e: BotError) => {
+				await interaction.followUp(e.message);
+
+				return;
+			}
+		);
+
+		if (!songs) return;
 
 		playable = songs[0];
 	}
@@ -85,20 +92,22 @@ export const execute = async (
 	if (!playable) return;
 
 	if (playable.isSong()) {
-		const embed = createSongEmbed(playable);
+		const song = await playable.resolve();
+
+		const embed = createSongEmbed(song);
 
 		const player = new Player(guildID);
 
 		player.add(playable);
 
 		if (player.isPlaying()) {
-			embed.setTitle(lang.player.queue.added(playable.name));
+			embed.setTitle(lang.player.queue.added(song.name));
 		} else {
 			player.move('forward');
 
 			voice.play(playable);
 
-			embed.setTitle(lang.player.queue.nowPlaying(playable.name));
+			embed.setTitle(lang.player.queue.nowPlaying(song.name));
 		}
 
 		await interaction.followUp({ embeds: [embed], components: [createActionRow()] });
@@ -114,7 +123,16 @@ export const execute = async (
 
 		const player = new Player(guildID);
 
-		playable.songs.forEach((song) => player.add(song));
+		const { toPlay, hasPlayed, playing } = player.get();
+
+		const queueLength = toPlay.length + hasPlayed.length + (playing ? 1 : 0);
+
+		if (playable.songs.length + queueLength < MAX_QUEUE_LENGTH)
+			playable.songs.forEach((song) => player.add(song));
+		else {
+			await interaction.followUp(lang.player.queue.full);
+			return;
+		}
 
 		const first = playable.songs.shift();
 
@@ -154,6 +172,7 @@ const createSongEmbed = (song: Song) =>
 		.addField(lang.embeds.play.length, secondsToReadable(song.length), true)
 		.addField(lang.embeds.play.artists, song.artists.join(', '), true)
 		.addField(lang.embeds.play.platform, capitalize(song.platform), true)
+		.setURL(song.url)
 		.setThumbnail(song.artwork);
 
 const createPlaylistEmbed = (playlist: Playlist) =>
@@ -162,4 +181,5 @@ const createPlaylistEmbed = (playlist: Playlist) =>
 		.addField(lang.embeds.play.songCount, playlist.songs.length.toString(), true)
 		.addField(lang.embeds.play.createdBy, playlist.user.name, true)
 		.addField(lang.embeds.play.platform, capitalize(playlist.platform), true)
+		.setURL(playlist.url)
 		.setThumbnail(playlist.artwork);
