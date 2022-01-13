@@ -1,3 +1,5 @@
+<p align="center"><img src="img/logo-banner.png" width="400"></p>
+
 # Tempo
 > Tempo is a simple, yet feature rich Discord music bot
 
