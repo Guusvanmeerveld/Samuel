@@ -8,10 +8,13 @@
     "arrowParens": "always",
     "importOrderSeparation": true,
 	"importOrder": [
+        "^next.*",
+        "^react.*",
 		"^discord.js",
 		"^@discordjs/.*",
         "^ioredis",
 		"^axios",
+        "^@components/.*",
 		"^@models/.*",
 		"^@utils/.*",
 		"^@src/.*"
