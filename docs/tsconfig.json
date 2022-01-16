@@ -5,8 +5,11 @@
 		"baseUrl": "src",
 		"paths": {
 			"@components/*": ["components/*"],
+			"@models/*": ["models/*"],
+			"@utils/*": ["utils/*"],
 			"@styles/*": ["styles/*"],
-			"@src/*": ["src/*"]
+			"@src/*": ["./*"],
+			"@bot/*": ["../../src/*"]
 		},
 		"allowJs": true,
 		"skipLibCheck": true,

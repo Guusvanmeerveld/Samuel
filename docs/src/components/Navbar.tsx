@@ -14,9 +14,20 @@ const Navbar: FC = () => {
 			<Container className="d-flex">
 				<div className={styles.header}>
 					<Image src="logo.png" width={48} height={48} />
-					<p>Tempo</p>
+					<Link href="/">
+						<a>Tempo</a>
+					</Link>
 				</div>
 				<div className={styles.buttons}>
+					<Link href="/commands">
+						<a>Commands</a>
+					</Link>
+					<Link href="/install">
+						<a>Selfhosting</a>
+					</Link>
+					<Link href="/contributions">
+						<a>Contributing</a>
+					</Link>
 					<Link href={process.env.SERVER_INVITE_LINK ?? 'https://discord.gg'}>
 						<a>
 							<RiDiscordFill size={30} />
