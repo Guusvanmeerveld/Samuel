@@ -1,4 +1,6 @@
 {
+	"name": "tempo",
+	"displayName": "Tempo",
 	"license": "MIT",
 	"version": "0.1.0",
 	"description": "A description",
