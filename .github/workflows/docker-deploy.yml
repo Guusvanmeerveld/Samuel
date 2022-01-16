@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - master
+    paths:
+      - src/**
+      - Dockerfile
+      - yarn.lock
+      - .dockerignore
+      - tsconfig.json
 
 jobs:
   test:
