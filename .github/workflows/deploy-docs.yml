@@ -17,9 +17,12 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '16.6.0'
+          node-version: '12.x'
 
-      - name: Install
+      - name: Install dependencies for bot
+        run: yarn run install
+
+      - name: Install dependencies for docs
         run: yarn run docs:install
 
       - name: Build
