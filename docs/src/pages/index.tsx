@@ -4,7 +4,7 @@ import Header from '@components/Header';
 import Layout from '@components/Layout';
 
 const Index: NextPage = () => (
-	<Layout>
+	<Layout title="Home">
 		<Header />
 	</Layout>
 );

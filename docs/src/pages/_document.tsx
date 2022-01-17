@@ -9,6 +9,7 @@ class AppDocument extends Document {
 						href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
 						rel="stylesheet"
 					/>
+					<link rel="icon" type="image/x-icon" href="/Tempo/favicon.ico"></link>
 				</Head>
 				<body>
 					<Main />

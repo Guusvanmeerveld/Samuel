@@ -7,7 +7,7 @@ import * as Discord from '@utils/discord';
 import { ApplicationCommand } from '@bot/models/command';
 
 const Commands: NextPage<{ commands: ApplicationCommand[] }> = ({ commands }) => {
-	return <Layout>{commands.map((command) => command.name)}</Layout>;
+	return <Layout title="Commands">{commands.map((command) => command.name)}</Layout>;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
