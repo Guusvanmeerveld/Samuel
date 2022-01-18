@@ -65,6 +65,7 @@ const nl: Language = {
 		activity: {
 			name: '/help',
 		},
+		noPrivateMessages: '',
 	},
 	checks: {
 		network: {
@@ -73,7 +74,11 @@ const nl: Language = {
 			error: (address) => `${address} kon niet worden bereikt, afbreken`,
 		},
 		soundcloud: {
-			notFound: 'SOUNDCLOUD_TOKEN variable is niet gevonden, afbreken',
+			fetching: {
+				failed: 'SoundCloud token ophalen mislukt',
+				success: 'SoundCloud token ophalen gelukt',
+				status: 'SoundCloud token ophalen',
+			},
 			status: 'SoundCloud token wordt gevalideerd...',
 			success: 'SoundCloud token check voltooid',
 			error: 'SoundCloud token kon niet worden gevalideerd, afbreken',

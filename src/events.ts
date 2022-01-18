@@ -7,6 +7,14 @@ import lang from '@src/lang';
 import handleContextMenu from '@src/menu';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
+	if (!interaction.guild) {
+		if (interaction.isCommand() || interaction.isContextMenu()) {
+			interaction.reply(lang.bot.noPrivateMessages);
+		}
+
+		return;
+	}
+
 	if (interaction.isCommand()) {
 		const command = Commands.get(interaction.commandName);
 

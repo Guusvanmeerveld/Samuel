@@ -60,6 +60,7 @@ export default interface Language {
 		activity: {
 			name: string;
 		};
+		noPrivateMessages: string;
 	};
 	/**
 	 * English only
@@ -74,7 +75,11 @@ export default interface Language {
 			error: (address: string) => string;
 		};
 		soundcloud: {
-			notFound: string;
+			fetching: {
+				status: string;
+				failed: string;
+				success: string;
+			};
 			status: string;
 			success: string;
 			error: string;

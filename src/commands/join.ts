@@ -12,7 +12,7 @@ export const join: Command = async (interaction) => {
 
 	const member = interaction.member as GuildMember;
 
-	const channel = member.voice.channelId!;
+	const channel = member.voice?.channelId;
 
 	if (!channel) {
 		await interaction.reply(lang.voice.memberNotConnected);

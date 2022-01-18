@@ -65,6 +65,7 @@ const en: Language = {
 		activity: {
 			name: '/help',
 		},
+		noPrivateMessages: 'Sorry, but Tempo does not support commands in private messages.',
 	},
 	language: {
 		notFound: (language) => `Could not find language ${language}, exiting...`,
@@ -76,7 +77,11 @@ const en: Language = {
 			error: (address) => `Could not ping ${address}, stopping`,
 		},
 		soundcloud: {
-			notFound: 'Could not find SOUNDCLOUD_TOKEN variable, stopping',
+			fetching: {
+				status: 'Fetching new Soundcloud token',
+				failed: 'Failed to fetch new Soundcloud token',
+				success: 'Fetched new Soundcloud token',
+			},
 			status: 'Validating SoundCloud token...',
 			success: 'SoundCloud token check succeeded',
 			error: 'Could not validate SoundCloud token, stopping',

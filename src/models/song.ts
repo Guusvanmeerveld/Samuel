@@ -10,6 +10,9 @@ interface Song extends Playable {
 	platform: Platform;
 	artists: string[];
 	released: Date;
+	/**
+	 * Time in seconds
+	 */
 	length: number;
 }
 

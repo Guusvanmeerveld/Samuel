@@ -1,5 +1,6 @@
 import * as file from './file';
 import * as soundcloud from './soundcloud';
+import * as spotify from './spotify';
 
 import BotError from '@models/errors';
 import { getter, searcher } from '@models/platform';
@@ -11,6 +12,7 @@ import {
 	SEARCH_RESULT_LIMIT,
 	SOUNDCLOUD_REGEX,
 	SOUNDCLOUD_SETS_REGEX,
+	SPOTIFY_REGEX,
 } from '@src/config/constants.config';
 import lang from '@src/lang';
 
@@ -23,6 +25,10 @@ export const search = async (
 
 	if (platform == 'soundcloud') {
 		searcher = soundcloud.search;
+	}
+
+	if (platform == 'spotify') {
+		searcher = spotify.search;
 	}
 
 	if (!searcher) throw new BotError(lang.song.notFound);
@@ -51,6 +57,10 @@ export const info = async (url: string): Promise<UnresolvedSong | Playlist> => {
 
 	if (url.match(SOUNDCLOUD_SETS_REGEX)) {
 		getter = soundcloud.playlist;
+	}
+
+	if (url.match(SPOTIFY_REGEX)) {
+		getter = spotify.get;
 	}
 
 	const extension = url.split('.').pop();
