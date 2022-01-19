@@ -1,6 +1,6 @@
 import { Client, Intents } from 'discord.js';
 
-import * as Logger from '@utils/logger';
+import * as Logger from '@global/utils/logger';
 
 import lang from '@src/lang';
 import updateCommands from '@src/updater';

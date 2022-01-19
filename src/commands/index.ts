@@ -8,7 +8,7 @@ import { resume } from './resume';
 import { search } from './search';
 import { stop } from './stop';
 
-import Command from '@models/command';
+import Command from '@global/models/command';
 
 const Commands = new Map<string, Command>();
 

@@ -10,11 +10,12 @@
 		"paths": {
 			"@utils/*": ["utils/*"],
 			"@models/*": ["models/*"],
-			"@global/*": ["../global/*"],
+			"@global/*": ["../../global/*"],
 			"@src/*": ["./*"]
 		},
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
-	}
+	},
+	"include": ["src/**/*", "../global/**/*"]
 }

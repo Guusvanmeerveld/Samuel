@@ -60,15 +60,15 @@ export default class Player {
 
 	/**
 	 * Checks if a song is in the queue.
-	 * @param url The url of the song
+	 * @param identifer The identifier of the song
 	 * @returns If the song is in the queue
 	 */
-	has = (url: string): boolean => {
+	has = (identifier: string): boolean => {
 		const player = this.get();
 
 		const song =
-			player?.toPlay.find((song) => song.url == url) ??
-			player?.hasPlayed.find((song) => song.url == url);
+			player?.toPlay.find((song) => song.identifier == identifier) ??
+			player?.hasPlayed.find((song) => song.identifier == identifier);
 
 		return song != undefined;
 	};
@@ -84,13 +84,13 @@ export default class Player {
 	};
 
 	/**
-	 * Searches for a song by its url and remove it.
-	 * @param url The url to search for
+	 * Searches for a song by its identifier and remove it.
+	 * @param identifier The identifier to search for
 	 */
-	remove = (url: string): void => {
+	remove = (identifier: string): void => {
 		const player = this.get();
 
-		player?.toPlay.filter((song) => song.url != url);
+		player?.toPlay.filter((song) => song.identifier != identifier);
 	};
 
 	/**
@@ -156,12 +156,12 @@ export default class Player {
 		if (!player.playing) {
 			voice.disconnect();
 
-			return [old?.url, undefined];
+			return [old?.identifier, undefined];
 		}
 
 		voice.play(player.playing);
 
-		return [old?.url, player.playing.url];
+		return [old?.identifier, player.playing.identifier];
 	};
 
 	/**

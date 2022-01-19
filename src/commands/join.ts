@@ -1,9 +1,10 @@
 import { GuildMember } from 'discord.js';
 
-import Command from '@models/command';
 import BotError from '@models/errors';
 
 import VoiceManager from '@utils/voice';
+
+import Command from '@global/models/command';
 
 import lang from '@src/lang';
 

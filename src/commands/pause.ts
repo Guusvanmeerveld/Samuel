@@ -1,7 +1,8 @@
-import Command from '@models/command';
 import BotError from '@models/errors';
 
 import Player from '@utils/player';
+
+import Command from '@global/models/command';
 
 import lang from '@src/lang';
 

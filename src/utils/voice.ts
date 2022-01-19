@@ -13,8 +13,9 @@ import {
 import BotError from '@models/errors';
 import { UnresolvedSong } from '@models/song';
 
-import * as Logger from '@utils/logger';
 import Player from '@utils/player';
+
+import * as Logger from '@global/utils/logger';
 
 import client from '@src/client';
 import lang from '@src/lang';

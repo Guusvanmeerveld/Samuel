@@ -8,8 +8,8 @@
 			"@models/*": ["models/*"],
 			"@utils/*": ["utils/*"],
 			"@styles/*": ["styles/*"],
-			"@src/*": ["./*"],
-			"@bot/*": ["../../src/*"]
+			"@global/*": ["../../global/*"],
+			"@src/*": ["./*"]
 		},
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -24,6 +24,6 @@
 		"isolatedModules": true,
 		"jsx": "preserve"
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../global"],
 	"exclude": ["node_modules"]
 }

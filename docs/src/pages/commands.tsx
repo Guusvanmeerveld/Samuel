@@ -7,7 +7,7 @@ import Layout from '@components/Layout';
 
 import * as Discord from '@utils/discord';
 
-import { ApplicationCommand } from '@bot/models/command';
+import { ApplicationCommand } from '@global/models/command';
 
 const Commands: NextPage<{ commands: ApplicationCommand[] }> = ({ commands }) => {
 	return (

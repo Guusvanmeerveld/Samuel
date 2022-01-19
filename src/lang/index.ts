@@ -1,6 +1,6 @@
 import Language from '@models/lang';
 
-import * as Logger from '@utils/logger';
+import * as Logger from '@global/utils/logger';
 
 import { LANGUAGE } from '@src/config';
 import en from '@src/lang/en';

@@ -9,7 +9,8 @@ import Song, { Platform, UnresolvedSong } from '@models/song';
 import { SearchResult, Set, Track } from '@models/soundcloud';
 
 import * as cache from '@utils/cache';
-import * as Logger from '@utils/logger';
+
+import * as Logger from '@global/utils/logger';
 
 import { SOUNDCLOUD_TOKEN } from '@src/config';
 import { SOUNDCLOUD_CLIENT_ID_REGEX } from '@src/config/constants.config';

@@ -10,20 +10,13 @@ const dev = process.env.ROLLUP_WATCH === 'true';
 /**
  * @type {import('rollup').RollupOptions}
  */
-export default {
+const config = {
 	input: 'src/index.ts',
 	output: {
 		dir: 'dist',
 		format: 'cjs',
 	},
-	external: [
-		'discord.js',
-		'@discordjs/voice',
-		'@discordjs/opus',
-		'ioredis',
-		'ffmpeg-static',
-		'libsodium-wrappers',
-	],
+	external: ['discord.js'],
 	plugins: [
 		dev && run(),
 		json(),
@@ -33,3 +26,5 @@ export default {
 		commonjs(),
 	],
 };
+
+export default config;

@@ -1,9 +1,10 @@
-import Command from '@models/command';
 import BotError from '@models/errors';
 import { UnresolvedSong } from '@models/song';
 
 import * as Controller from '@utils/controller';
 import { DefaultEmbed } from '@utils/embed';
+
+import Command from '@global/models/command';
 
 import lang from '@src/lang';
 

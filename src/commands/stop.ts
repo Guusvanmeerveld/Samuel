@@ -1,7 +1,7 @@
-import Command from '@models/command';
-
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
+
+import Command from '@global/models/command';
 
 import lang from '@src/lang';
 

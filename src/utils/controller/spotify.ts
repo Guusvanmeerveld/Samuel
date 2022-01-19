@@ -107,6 +107,7 @@ const urlToSong = ({
 			}
 
 			const song: Song = {
+				...playable,
 				artists: track.artists.map((artist) => artist.name),
 				artwork: track.album.images[0].url,
 				length: track.duration_ms / 1000,
@@ -114,6 +115,7 @@ const urlToSong = ({
 				platform,
 				released: new Date(track.album.release_date),
 				url: track.external_urls.spotify,
+				streamURL: '',
 			};
 
 			await cache.set(id!, song);

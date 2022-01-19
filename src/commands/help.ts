@@ -1,6 +1,6 @@
-import Command from '@models/command';
-
 import { DefaultEmbed } from '@utils/embed';
+
+import Command from '@global/models/command';
 
 import Commands from '@src/config/commands.config';
 import lang from '@src/lang';
@@ -15,7 +15,7 @@ export const help: Command = async (interaction) => {
 		if (command) {
 			const embed = new DefaultEmbed()
 				.setTitle(lang.commands.help.command.title(command.name))
-				.setDescription(lang.commands.help.command.description(command.description));
+				.setDescription(lang.commands.help.command.description(command.description ?? ''));
 
 			if (command.options)
 				embed.addField(
@@ -51,7 +51,7 @@ export const help: Command = async (interaction) => {
 	commands.forEach((command) => {
 		embed.addField(
 			lang.commands.help.list.name(command.name),
-			lang.commands.help.list.description(command.description)
+			lang.commands.help.list.description(command.description ?? '')
 		);
 	});
 

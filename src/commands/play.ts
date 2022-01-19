@@ -6,7 +6,6 @@ import {
 	MessageButton,
 } from 'discord.js';
 
-import Command from '@models/command';
 import BotError from '@models/errors';
 import { Playable } from '@models/player';
 import Playlist from '@models/playlist';
@@ -16,6 +15,8 @@ import * as Controller from '@utils/controller';
 import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
+
+import Command from '@global/models/command';
 
 import { MAX_QUEUE_LENGTH } from '@src/config';
 import lang from '@src/lang';

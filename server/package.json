@@ -1,0 +1,29 @@
+{
+	"name": "tempo-server",
+	"version": "1.0.0",
+	"description": "Host server for Tempo Discord bot",
+	"main": "dist/index.js",
+	"repository": "https//github.com/Guusvanmeerveld/Tempo",
+	"author": "Guusvanmeerveld",
+	"license": "MIT",
+	"scripts": {
+		"build": "rollup -c",
+		"dev": "rimraf dist && rollup -cw",
+		"start": "node . --production"
+	},
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^21.0.1",
+		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^13.0.6",
+		"@rollup/plugin-run": "^2.1.0",
+		"kleur": "^4.1.4",
+		"rimraf": "^3.0.2",
+		"rollup": "^2.56.3",
+		"rollup-plugin-ts-paths": "^1.0.5",
+		"rollup-plugin-typescript2": "^0.31.1",
+		"typescript": "^4.5.4"
+	},
+	"dependencies": {
+		"discord.js": "^13.6.0"
+	}
+}

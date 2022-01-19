@@ -17,6 +17,7 @@
         "^@components/.*",
 		"^@models/.*",
 		"^@utils/.*",
+		"^@global/.*",
 		"^@src/.*",
         "^@bot/.*"
 	]

@@ -5,6 +5,8 @@
 	"version": "0.1.0",
 	"description": "A description",
 	"main": "dist/index.js",
+	"repository": "https//github.com/Guusvanmeerveld/Tempo",
+	"author": "Guusvanmeerveld",
 	"scripts": {
 		"build": "rollup -c",
 		"dev": "rimraf dist && rollup -cw",
@@ -14,7 +16,11 @@
 		"lint": "eslint src",
 		"docs:install": "cd docs && yarn install",
 		"docs:build": "cd docs && yarn run build",
-		"docs:dev": "cd docs && yarn run dev"
+		"docs:dev": "cd docs && yarn run dev",
+		"server:install": "cd server && yarn install",
+		"server:start": "cd docs && yarn run start",
+		"server:build": "cd server && yarn run build",
+		"server:dev": "cd server && yarn run dev"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.6.0",
@@ -52,7 +58,8 @@
 		"rimraf": "^3.0.2",
 		"rollup": "^2.56.3",
 		"rollup-plugin-ts-paths": "^1.0.5",
-		"rollup-plugin-typescript": "^1.0.1",
-		"typescript": "^4.4.3"
+		"rollup-plugin-typescript2": "^0.31.1",
+		"typescript": "^4.4.3",
+		"ytdl-core": "^4.10.0"
 	}
 }

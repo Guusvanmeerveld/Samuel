@@ -1,4 +1,9 @@
-import { ApplicationCommand, ApplicationCommandType, Option, OptionType } from '@models/command';
+import {
+	ApplicationCommand,
+	ApplicationCommandType,
+	Option,
+	OptionType,
+} from '@global/models/command';
 
 const platformOption = {
 	name: 'platform',

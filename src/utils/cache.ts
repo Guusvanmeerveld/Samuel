@@ -4,7 +4,7 @@ import Redis from 'ioredis';
 
 import { getter, setter, unsetter } from '@models/cache';
 
-import * as Logger from '@utils/logger';
+import * as Logger from '@global/utils/logger';
 
 import { CACHE_TIMEOUT, REDIS_PASSWORD, REDIS_URL, REDIS_USER } from '@src/config';
 import lang from '@src/lang';

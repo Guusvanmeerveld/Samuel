@@ -3,7 +3,8 @@ import { ClientApplication } from 'discord.js';
 import axios, { AxiosError } from 'axios';
 
 import * as cache from '@utils/cache';
-import * as Logger from '@utils/logger';
+
+import * as Logger from '@global/utils/logger';
 
 import { BOT_TOKEN, DISCORD_API_VERSION } from '@src/config';
 import commands from '@src/config/commands.config';
