@@ -24,7 +24,7 @@ Tempo's main development goal was to create a bot that is both self hostable yet
 
 - Search & playback of SoundCloud tracks, albums & playlists.
 - Full support for (currently) 2 languages.
-- Caching of song data using either JSON or Redis.
+- Caching of song data using Redis.
 - (WIP) Youtube & Spotify playback.
 - (WIP) Search for lyrics.
 
@@ -50,6 +50,12 @@ For a more complete list go to [commands.config.ts](src/config/commands.config.t
 Even though Tempo is a simple bot, it does have a lot of customizable features. To customize & configure the bot, simply create environment variables with the desired values. This can be done using a `.env` file in development and using `docker-compose` or `docker run` in production.
 
 - `BOT_TOKEN`: A required token which is used to authorize with Discord.
+- `REDIS_URL`: Required, specifies the url to connect with the Redis database.
+- `REDIS_PASSWORD`: Required (if you use a password), used in combination with `REDIS_URL` to specify the password for the user.
+- `REDIS_USER`: Required (if you are not using the default user), used in combination with `REDIS_URL` to specify the user.
+- `SPOTIFY_CLIENT_ID`: Required, your Spotify developer client id.
+- `SPOTIFY_CLIENT_SECRET`: Required, your Spotify developer client secret.
+- `SOUNDCLOUD_TOKEN`: Not required, the bot fetches this token from SoundCloud itself. But if that does not work, you can specify your own token. For more information on how to acquire this token, please refer to [this](https://stackoverflow.com/a/43962626/14346660) link.
 - `DISCORD_API_VERSION`: Not required nor recommended, but a optional variable which can be used to change the api version if that is for any reason required. Default: `9`
 - `BOT_COLOR`: Not required, can be set to change color of the bots embeds. Default: `BLURPLE`. Uses the ColorResolvable type from Discord.js. Down below is a list of valid colors:
   - 'DEFAULT'
@@ -84,15 +90,14 @@ Even though Tempo is a simple bot, it does have a lot of customizable features. 
   - 'NOT_QUITE_BLACK'
   - 'RANDOM'
 - `CACHE_LOCATION`: Not required, specifies the location of the cache <ins>directory</ins>, which can be useful in a Docker environment. Default: `{APP_DIR}/.cache`
-- `CACHE_TIMEOUT`: Not required, specifies the amount of time request data will be cached for in <ins>milliseconds</ins>. Default: `50000`
-- `REDIS_URL`: Not required, specifies the url to connect with the Redis database.
-- `REDIS_PASSWORD`: Not required, used in combination with `REDIS_URL` to specify the password for the user.
-- `REDIS_USER`: Not required, used in combination with `REDIS_URL` to specify the user.
-- `SOUNDCLOUD_TOKEN`: Required token to authorize with Soundcloud. For more information on how to acquire this token, please refer to [this](https://stackoverflow.com/a/43962626/14346660) link.
+- `CACHE_TIMEOUT`: Not required, specifies the amount of time request data will be cached for in <ins>milliseconds</ins>. Default: `1000 * 60 * 5`
 - `PING_ADDRESS`: Not required, specifies the address to ping for the network check. Default: `ping.archlinux.org`.
 - `LANGUAGE`: Not required, specifies the language the bot should use. Default: `EN`. Supported languages:
   - 'EN'
   - 'NL'
+- `MAX_AUDIO_FILE_SIZE`: Not required, the max file size for downloading an audio file from Discord in bytes. Default: `100MB`
+- `PLACEHOLDER_IMG`: Not required, the image to show when no image could be found for a song. Default: `https://raw.githubusercontent.com/Guusvanmeerveld/Tempo/master/img/placeholder.jpg`
+- `MAX_QUEUE_LENGTH`: Not required, the max length a song queue can be. Default: `50`
 
 ## Building
 
