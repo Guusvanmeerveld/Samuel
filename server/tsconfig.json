@@ -1,21 +1,9 @@
 {
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"target": "ES6",
-		"module": "ES2015",
-		"strict": true,
-		"outDir": "dist",
-		"baseUrl": "src",
-		"resolveJsonModule": true,
-		"moduleResolution": "node",
-		"paths": {
-			"@utils/*": ["utils/*"],
-			"@models/*": ["models/*"],
-			"@global/*": ["../../global/*"],
-			"@src/*": ["./*"]
-		},
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"outDir": "dist"
 	},
-	"include": ["src/**/*", "../global/**/*"]
+	"ts-node": {
+		"compilerOptions": { "module": "CommonJS" }
+	}
 }

@@ -1,7 +1,8 @@
 import preStartChecks from './checks';
 
+import { BOT_TOKEN } from '@global/config';
+
 import client from '@src/client';
-import { BOT_TOKEN } from '@src/config';
 import '@src/events';
 
 console.clear();

@@ -2,9 +2,8 @@ import BotError from '@models/errors';
 
 import VoiceManager from '@utils/voice';
 
+import lang from '@global/lang';
 import Command from '@global/models/command';
-
-import lang from '@src/lang';
 
 export const disconnect: Command = async (interaction) => {
 	const guildID = interaction.guildId;

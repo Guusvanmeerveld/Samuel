@@ -16,10 +16,10 @@ import { DefaultEmbed } from '@utils/embed';
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
+import { MAX_QUEUE_LENGTH } from '@global/config';
+import lang from '@global/lang';
 import Command from '@global/models/command';
 
-import { MAX_QUEUE_LENGTH } from '@src/config';
-import lang from '@src/lang';
 import { abbreviateNumber, capitalize, secondsToReadable } from '@src/utils';
 
 export const play: Command = async (interaction) => {

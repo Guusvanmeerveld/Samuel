@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ApplicationCommand } from '@bot/models/command';
+import { ApplicationCommand } from '@global/models/command';
 
 const request = axios.create({
 	baseURL: 'https://discord.com/api/v9/',

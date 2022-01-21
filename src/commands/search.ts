@@ -4,9 +4,8 @@ import { UnresolvedSong } from '@models/song';
 import * as Controller from '@utils/controller';
 import { DefaultEmbed } from '@utils/embed';
 
+import lang from '@global/lang';
 import Command from '@global/models/command';
-
-import lang from '@src/lang';
 
 export const search: Command = async (interaction) => {
 	const keywords = interaction.options.get('keywords')?.value as string;

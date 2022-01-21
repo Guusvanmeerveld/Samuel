@@ -15,10 +15,10 @@ import { UnresolvedSong } from '@models/song';
 
 import Player from '@utils/player';
 
+import lang from '@global/lang';
 import * as Logger from '@global/utils/logger';
 
 import client from '@src/client';
-import lang from '@src/lang';
 
 type AudioStream = m3u8stream.Stream;
 

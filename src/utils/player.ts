@@ -7,7 +7,7 @@ import { UnresolvedSong } from '@models/song';
 
 import VoiceManager from '@utils/voice';
 
-import lang from '@src/lang';
+import lang from '@global/lang';
 
 const GlobalPlayerModel = new Collection<string, PlayerModel>();
 

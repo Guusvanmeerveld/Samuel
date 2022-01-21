@@ -1,7 +1,8 @@
 import { ContextMenuInteraction } from 'discord.js';
 
+import lang from '@global/lang';
+
 import * as play from '@src/commands/play';
-import lang from '@src/lang';
 
 const handleContextMenu = async (interaction: ContextMenuInteraction): Promise<void> => {
 	const message = interaction.channel?.messages.resolve(interaction.targetId);

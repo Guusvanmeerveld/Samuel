@@ -10,8 +10,8 @@ import { UnresolvedSong } from '@models/song';
 
 import { hash } from '@utils/cache';
 
-import { CACHE_LOCATION, MAX_AUDIO_FILE_SIZE, PLACEHOLDER_IMG } from '@src/config';
-import lang from '@src/lang';
+import { CACHE_LOCATION, MAX_AUDIO_FILE_SIZE, PLACEHOLDER_IMG } from '@global/config';
+import lang from '@global/lang';
 
 const playable = { isPlaylist: () => false, isSong: () => true };
 

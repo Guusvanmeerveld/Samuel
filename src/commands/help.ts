@@ -1,9 +1,9 @@
 import { DefaultEmbed } from '@utils/embed';
 
+import Commands from '@global/config/commands.config';
+import lang from '@global/lang';
 import Command from '@global/models/command';
 
-import Commands from '@src/config/commands.config';
-import lang from '@src/lang';
 import * as Utils from '@src/utils';
 
 export const help: Command = async (interaction) => {

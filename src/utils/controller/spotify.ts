@@ -7,8 +7,8 @@ import { SearchResult, Track } from '@models/spotify';
 
 import * as cache from '@utils/cache';
 
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@src/config';
-import lang from '@src/lang';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@global/config';
+import lang from '@global/lang';
 
 const CREDENTIALS = btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`);
 

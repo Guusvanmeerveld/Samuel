@@ -8,7 +8,7 @@
 			"@models/*": ["models/*"],
 			"@utils/*": ["utils/*"],
 			"@styles/*": ["styles/*"],
-			"@global/*": ["../../global/*"],
+			"@global/*": ["../../shared/*"],
 			"@src/*": ["./*"]
 		},
 		"allowJs": true,

@@ -13,8 +13,8 @@ import {
 	SOUNDCLOUD_REGEX,
 	SOUNDCLOUD_SETS_REGEX,
 	SPOTIFY_REGEX,
-} from '@src/config/constants.config';
-import lang from '@src/lang';
+} from '@global/config/constants.config';
+import lang from '@global/lang';
 
 export const search = async (
 	keywords: string[],

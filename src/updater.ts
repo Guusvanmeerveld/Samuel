@@ -4,11 +4,10 @@ import axios, { AxiosError } from 'axios';
 
 import * as cache from '@utils/cache';
 
+import { BOT_TOKEN, DISCORD_API_VERSION } from '@global/config';
+import commands from '@global/config/commands.config';
+import lang from '@global/lang';
 import * as Logger from '@global/utils/logger';
-
-import { BOT_TOKEN, DISCORD_API_VERSION } from '@src/config';
-import commands from '@src/config/commands.config';
-import lang from '@src/lang';
 
 const DISCORD_ENDPOINT = 'https://discord.com/api/v' + DISCORD_API_VERSION;
 

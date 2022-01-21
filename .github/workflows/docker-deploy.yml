@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - src/**
+      - server/**
       - .github/workflows/**
       - Dockerfile
       - yarn.lock

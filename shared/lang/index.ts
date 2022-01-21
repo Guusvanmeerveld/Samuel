@@ -1,10 +1,9 @@
 import Language from '@models/lang';
 
+import { LANGUAGE } from '@global/config';
+import en from '@global/lang/en';
+import nl from '@global/lang/nl';
 import * as Logger from '@global/utils/logger';
-
-import { LANGUAGE } from '@src/config';
-import en from '@src/lang/en';
-import nl from '@src/lang/nl';
 
 const languages = new Map<string, Language>();
 

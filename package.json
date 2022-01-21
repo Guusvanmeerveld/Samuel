@@ -13,14 +13,14 @@
 		"start": "node . --production",
 		"start:shard": "node shard --production",
 		"prettify": "prettier --write .",
-		"lint": "eslint src",
-		"docs:install": "cd docs && yarn install",
-		"docs:build": "cd docs && yarn run build",
-		"docs:dev": "cd docs && yarn run dev",
-		"server:install": "cd server && yarn install",
-		"server:start": "cd docs && yarn run start",
-		"server:build": "cd server && yarn run build",
-		"server:dev": "cd server && yarn run dev"
+		"lint": "eslint src server",
+		"docs:install": "yarn --cwd docs install",
+		"docs:build": "yarn --cwd docs run build",
+		"docs:dev": " yarn --cwd docs run dev",
+		"server:install": "yarn --cwd server install",
+		"server:start": "yarn --cwd server run start",
+		"server:build": "yarn --cwd server run build",
+		"server:dev": "yarn --cwd server run dev"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.6.0",

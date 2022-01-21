@@ -3,9 +3,9 @@ import styles from './Command.module.sass';
 import { FC, useState } from 'react';
 import { Badge, Button, Col, Collapse } from 'react-bootstrap';
 
-import { capitalize } from '@src/utils';
+import { ApplicationCommand } from '@global/models/command';
 
-import { ApplicationCommand } from '@bot/models/command';
+import { capitalize } from '@src/utils';
 
 const Command: FC<{ command: ApplicationCommand }> = ({ command }) => {
 	const [open, setOpen] = useState(false);

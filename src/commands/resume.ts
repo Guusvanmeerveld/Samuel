@@ -2,9 +2,8 @@ import BotError from '@models/errors';
 
 import Player from '@utils/player';
 
+import lang from '@global/lang';
 import Command from '@global/models/command';
-
-import lang from '@src/lang';
 
 export const resume: Command = async (interaction) => {
 	const guild = interaction.guild!;

@@ -3,10 +3,9 @@ import ping from 'ping';
 import * as cache from '@utils/cache';
 import { fetchToken, testToken } from '@utils/controller/soundcloud';
 
+import { PING_ADDRESS, SOUNDCLOUD_TOKEN } from '@global/config';
+import lang from '@global/lang';
 import * as Logger from '@global/utils/logger';
-
-import { PING_ADDRESS, SOUNDCLOUD_TOKEN } from '@src/config';
-import lang from '@src/lang';
 
 const preStartChecks = async (): Promise<void> => {
 	Logger.log(lang.checks.network.status);

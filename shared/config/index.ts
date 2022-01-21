@@ -1,8 +1,6 @@
 import { config } from 'dotenv';
 import { join } from 'path';
 
-import { ColorResolvable } from 'discord.js';
-
 config();
 
 /**
@@ -20,7 +18,7 @@ export const DISCORD_API_VERSION = process.env.DISCORD_API_VERSION ?? '9';
  * @optional
  * @description The color the bot will use for embeds.
  */
-export const BOT_COLOR: ColorResolvable = (process.env.BOT_COLOR as ColorResolvable) ?? 'BLURPLE';
+export const BOT_COLOR = process.env.BOT_COLOR ?? 'BLURPLE';
 
 /**
  * @optional
@@ -35,7 +33,7 @@ export const CACHE_LOCATION = process.env.CACHE_LOCATION ?? join(process.cwd(), 
 export const CACHE_TIMEOUT = parseInt(process.env.CACHE_TIMEOUT as string) || 1000 * 60 * 5;
 
 /**
- * @optional
+ * @required
  */
 export const REDIS_URL = process.env.REDIS_URL;
 

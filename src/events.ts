@@ -1,9 +1,10 @@
 import { Interaction } from 'discord.js';
 
+import lang from '@global/lang';
+
 import handleButtons from '@src/buttons';
 import client from '@src/client';
 import Commands from '@src/commands';
-import lang from '@src/lang';
 import handleContextMenu from '@src/menu';
 
 client.on('interactionCreate', async (interaction: Interaction) => {

@@ -2,7 +2,7 @@ import { ButtonInteraction } from 'discord.js';
 
 import Player from '@utils/player';
 
-import lang from '@src/lang';
+import lang from '@global/lang';
 
 const handleButtons = async (interaction: ButtonInteraction): Promise<void> => {
 	const player = new Player(interaction.guildId);

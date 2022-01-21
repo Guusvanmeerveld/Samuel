@@ -1,9 +1,8 @@
 import Player from '@utils/player';
 import VoiceManager from '@utils/voice';
 
+import lang from '@global/lang';
 import Command from '@global/models/command';
-
-import lang from '@src/lang';
 
 export const stop: Command = async (interaction) => {
 	const guild = interaction.guild!;

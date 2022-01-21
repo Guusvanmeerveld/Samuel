@@ -1,3 +1,7 @@
-import * as Logger from '@global/utils/logger';
+import * as redis from './redis';
 
-Logger.log('yeet');
+const main = async () => {
+	await redis.connect();
+};
+
+main();

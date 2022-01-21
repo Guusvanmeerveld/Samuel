@@ -10,7 +10,7 @@
 		"paths": {
 			"@utils/*": ["utils/*"],
 			"@models/*": ["models/*"],
-			"@global/*": ["../global/*"],
+			"@global/*": ["../shared/*"],
 			"@src/*": ["./*"]
 		},
 		"esModuleInterop": true,

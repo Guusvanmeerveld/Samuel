@@ -10,11 +10,10 @@ import { SearchResult, Set, Track } from '@models/soundcloud';
 
 import * as cache from '@utils/cache';
 
+import { SOUNDCLOUD_TOKEN } from '@global/config';
+import { SOUNDCLOUD_CLIENT_ID_REGEX } from '@global/config/constants.config';
+import lang from '@global/lang';
 import * as Logger from '@global/utils/logger';
-
-import { SOUNDCLOUD_TOKEN } from '@src/config';
-import { SOUNDCLOUD_CLIENT_ID_REGEX } from '@src/config/constants.config';
-import lang from '@src/lang';
 
 type CachedSong = Song & { expires: number };
 
