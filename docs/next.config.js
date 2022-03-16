@@ -26,9 +26,9 @@ const nextConfig = {
 		})(),
 		APPLICATION_ID: '747185867092787210',
 		SERVER_INVITE_LINK: `https://discord.gg/${inviteCode}`,
-		REPO_LINK: 'https://github.com/Guusvanmeerveld/Tempo',
+		REPO_LINK: 'https://github.com/Guusvanmeerveld/Samuel',
 	},
-	basePath: '/Tempo',
+	basePath: '/Samuel',
 };
 
 module.exports = nextConfig;

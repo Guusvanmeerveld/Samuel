@@ -1,10 +1,10 @@
-<p align="center"><img src="img/logo-banner.png" width="400"></p>
+<p align="center"><img src="img/samuel-banner.png" width="400"></p>
 
-# Tempo
-> Tempo is a simple, yet feature rich Discord music bot
+# Samuel
+> Samuel is a simple, yet feature rich Discord music bot
 
 ## Index
-- [Tempo](#tempo)
+- [Samuel](#samuel)
   - [Index](#index)
   - [Description](#description)
   - [Features](#features)
@@ -18,7 +18,7 @@
 
 ## Description
 
-Tempo's main development goal was to create a bot that is both self hostable yet also easily accessible to the average user. Because of this, a lot of the commands are quite simple and self explanitory, but can also be powerful.
+Samuel's main development goal was to create a bot that is both self hostable yet also easily accessible to the average user. Because of this, a lot of the commands are quite simple and self explanitory, but can also be powerful.
 
 ## Features
 
@@ -47,7 +47,7 @@ For a more complete list go to [commands.config.ts](src/config/commands.config.t
 
 ## Configuration
 
-Even though Tempo is a simple bot, it does have a lot of customizable features. To customize & configure the bot, simply create environment variables with the desired values. This can be done using a `.env` file in development and using `docker-compose` or `docker run` in production.
+Even though Samuel is a simple bot, it does have a lot of customizable features. To customize & configure the bot, simply create environment variables with the desired values. This can be done using a `.env` file in development and using `docker-compose` or `docker run` in production.
 
 - `BOT_TOKEN`: A required token which is used to authorize with Discord.
 - `REDIS_URL`: Required, specifies the url to connect with the Redis database.
@@ -96,12 +96,12 @@ Even though Tempo is a simple bot, it does have a lot of customizable features. 
   - 'EN'
   - 'NL'
 - `MAX_AUDIO_FILE_SIZE`: Not required, the max file size for downloading an audio file from Discord in bytes. Default: `100MB`
-- `PLACEHOLDER_IMG`: Not required, the image to show when no image could be found for a song. Default: `https://raw.githubusercontent.com/Guusvanmeerveld/Tempo/master/img/placeholder.jpg`
+- `PLACEHOLDER_IMG`: Not required, the image to show when no image could be found for a song. Default: `https://raw.githubusercontent.com/Guusvanmeerveld/Samuel/master/img/placeholder.jpg`
 - `MAX_QUEUE_LENGTH`: Not required, the max length a song queue can be. Default: `50`
 
 ## Building
 
-Because Tempo is a Typescript based project, it is recommended to use Yarn as the primary Node development tool.
+Because Samuel is a Typescript based project, it is recommended to use Yarn as the primary Node development tool.
 
 ### Requirements:
 When building locally:
@@ -115,8 +115,8 @@ When building for Docker:
 
 To get started, clone the repo:
 ```
-git clone https://github.com/Guusvanmeerveld/Tempo tempo
-cd tempo
+git clone https://github.com/Guusvanmeerveld/Samuel Samuel
+cd Samuel
 ```
 
 Now, you have the choice to either build for Docker or build locally.
@@ -142,8 +142,8 @@ The finished `index.js` can be found in the output folder. To start the bot run 
 To create a local Docker image, either build it using `docker build` or `docker-compose`:
 
 ```
-docker build . -t guusvanmeerveld/tempo
-docker run -d guusvanmeerveld/tempo --name tempo
+docker build . -t guusvanmeerveld/Samuel
+docker run -d guusvanmeerveld/Samuel --name Samuel
 ```
 
 OR
